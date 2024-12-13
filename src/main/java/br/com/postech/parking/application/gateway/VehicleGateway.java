@@ -7,5 +7,7 @@ import java.util.Optional;
 public interface VehicleGateway {
 
     Optional<Vehicle> getVehicleByPlate(String plate);
+    Optional<Vehicle> findVehicleById(Long id);
+    Vehicle createVehicle(Vehicle vehicle);
 
 }
