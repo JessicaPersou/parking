@@ -5,8 +5,7 @@ import br.com.postech.parking.application.gateway.VehicleGateway;
 import br.com.postech.parking.application.gateway.jpa.entity.VehicleEntity;
 import br.com.postech.parking.application.gateway.jpa.repository.VehicleRepository;
 import br.com.postech.parking.domain.Vehicle;
-import br.com.postech.parking.domain.factory.VehicleFactory;
-import br.com.postech.parking.exception.VehicleAlreadyExistsException;
+import br.com.postech.parking.exception.EntityAlreadyExistsException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,8 @@ public class CreateVehicleUseCase {
 
         Optional<Vehicle> existingVehicle = vehicleGateway.getVehicleByPlate(vehicle.getPlate());
         if (existingVehicle.isPresent()) {
-            throw new VehicleAlreadyExistsException("Vehicle with plate " + vehicle.getPlate() + " already exists");
+            log.info("Vehicle with plate {} already exists", vehicle.getPlate());
+            throw new EntityAlreadyExistsException("Vehicle with plate: " + vehicle.getPlate() + " already exists");
         }
 
         VehicleEntity vehicleEntity = new VehicleDTO(

@@ -3,12 +3,10 @@ package br.com.postech.parking.adapter.controller;
 import br.com.postech.parking.application.dto.VehicleDTO;
 import br.com.postech.parking.domain.Vehicle;
 import br.com.postech.parking.domain.factory.VehicleFactory;
-import br.com.postech.parking.exception.VehicleAlreadyExistsException;
 import br.com.postech.parking.usecases.CreateVehicleUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,8 +28,5 @@ public class VehicleController {
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
 
-    @ExceptionHandler(VehicleAlreadyExistsException.class)
-    public ResponseEntity<String> handleVehicleAlreadyExists(VehicleAlreadyExistsException ex) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
-    }
+
 }
