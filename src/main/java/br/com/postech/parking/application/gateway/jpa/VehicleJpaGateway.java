@@ -6,7 +6,9 @@ import br.com.postech.parking.application.gateway.jpa.entity.VehicleEntity;
 import br.com.postech.parking.application.gateway.jpa.repository.VehicleRepository;
 import br.com.postech.parking.domain.Vehicle;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class VehicleJpaGateway implements VehicleGateway {
+
     private final VehicleRepository vehicleRepository;
 
     @Override
@@ -28,6 +31,7 @@ public class VehicleJpaGateway implements VehicleGateway {
         return vehicleRepository.findById(id).map(this::convertToVehicle);
     }
 
+    @Override
     public Vehicle createVehicle(Vehicle vehicle) {
         VehicleEntity entityToSave = new VehicleDTO(
                 vehicle.getId(),
@@ -47,6 +51,15 @@ public class VehicleJpaGateway implements VehicleGateway {
 
         return convertToVehicle(savedEntity);
     }
+
+    @Override
+    public List<Vehicle> getAllVehicles() {
+        return vehicleRepository.findAll()
+                .stream()
+                .map(this::convertToVehicle)
+                .collect(Collectors.toList());
+    }
+
     private Vehicle convertToVehicle(VehicleEntity entity) {
         return new Vehicle(
                 entity.getId(),

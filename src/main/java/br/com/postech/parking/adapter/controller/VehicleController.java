@@ -6,6 +6,8 @@ import br.com.postech.parking.domain.factory.VehicleFactory;
 import br.com.postech.parking.usecases.CreateVehicleUseCase;
 import br.com.postech.parking.usecases.FindVehicleUseCase;
 import jakarta.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,6 +54,13 @@ public class VehicleController {
         Vehicle vehicle = findVehicleUseCase.findVehicle(id);
         VehicleDTO responseDTO = vehicleFactory.createVehicleDTO(vehicle);
         return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<VehicleDTO>> findVehicles() {
+        List<Vehicle> vehicles = findVehicleUseCase.findAllVehicles();
+        List<VehicleDTO> dtos = vehicles.stream().map(vehicleFactory::createVehicleDTO).collect(Collectors.toUnmodifiableList());
+        return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
 
 }
