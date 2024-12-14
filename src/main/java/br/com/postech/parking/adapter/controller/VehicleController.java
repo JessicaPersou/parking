@@ -4,6 +4,7 @@ import br.com.postech.parking.application.dto.VehicleDTO;
 import br.com.postech.parking.domain.Vehicle;
 import br.com.postech.parking.domain.factory.VehicleFactory;
 import br.com.postech.parking.usecases.CreateVehicleUseCase;
+import br.com.postech.parking.usecases.DeleteVehicleUseCase;
 import br.com.postech.parking.usecases.FindVehicleUseCase;
 import br.com.postech.parking.usecases.UpdateVehicleUseCase;
 import jakarta.validation.Valid;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,13 +37,16 @@ public class VehicleController {
     private final VehicleFactory vehicleFactory;
     private final FindVehicleUseCase findVehicleUseCase;
     private final UpdateVehicleUseCase updateVehicleUseCase;
+    private final DeleteVehicleUseCase deleteVehicleUseCase;
 
     public VehicleController(CreateVehicleUseCase createVehicleUseCase, VehicleFactory vehicleFactory,
-            FindVehicleUseCase findVehicleUseCase, UpdateVehicleUseCase updateVehicleUseCase) {
+            FindVehicleUseCase findVehicleUseCase, UpdateVehicleUseCase updateVehicleUseCase,
+            DeleteVehicleUseCase deleteVehicleUseCase) {
         this.createVehicleUseCase = createVehicleUseCase;
         this.vehicleFactory = vehicleFactory;
         this.findVehicleUseCase = findVehicleUseCase;
         this.updateVehicleUseCase = updateVehicleUseCase;
+        this.deleteVehicleUseCase = deleteVehicleUseCase;
     }
 
     @PostMapping
@@ -73,5 +78,10 @@ public class VehicleController {
         Vehicle updateVehicle = updateVehicleUseCase.updateVehicle(plate, vehicle);
         VehicleDTO responseDTO = vehicleFactory.createVehicleDTO(updateVehicle);
         return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
+    }
+
+    @DeleteMapping("/{plate}")
+    public void deleteVehicle(@PathVariable String plate) {
+        deleteVehicleUseCase.delete(plate);
     }
 }

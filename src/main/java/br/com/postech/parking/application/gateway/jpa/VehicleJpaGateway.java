@@ -5,6 +5,7 @@ import br.com.postech.parking.application.gateway.VehicleGateway;
 import br.com.postech.parking.application.gateway.jpa.entity.VehicleEntity;
 import br.com.postech.parking.application.gateway.jpa.repository.VehicleRepository;
 import br.com.postech.parking.domain.Vehicle;
+import br.com.postech.parking.exception.EntityAlreadyExistsException;
 import br.com.postech.parking.exception.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -34,6 +35,13 @@ public class VehicleJpaGateway implements VehicleGateway {
 
     @Override
     public Vehicle createVehicle(Vehicle vehicle) {
+        log.info("Creating vehicle: {}", vehicle);
+
+        Optional<VehicleEntity> existingVehicle = vehicleRepository.findByPlate(vehicle.getPlate());
+        if (existingVehicle.isPresent()) {
+            log.info("Vehicle with plate {} already exists", vehicle.getPlate());
+            throw new EntityAlreadyExistsException("Vehicle with plate: " + vehicle.getPlate() + " already exists");
+        }
         VehicleEntity entityToSave = new VehicleDTO(
                 vehicle.getId(),
                 vehicle.getPlate(),
@@ -80,6 +88,12 @@ public class VehicleJpaGateway implements VehicleGateway {
         return convertToVehicle(vehicleExits);
     }
 
+    @Override
+    public void deleteVehicle(String plate) {
+        VehicleEntity vehicleExits = vehicleRepository.findByPlate(plate)
+                .orElseThrow(() -> new EntityNotFoundException("Vehicle not found with plate: " + plate));
+        vehicleRepository.delete(vehicleExits);
+    }
 
     private Vehicle convertToVehicle(VehicleEntity entity) {
         return new Vehicle(

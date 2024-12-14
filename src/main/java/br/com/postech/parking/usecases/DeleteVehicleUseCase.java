@@ -9,10 +9,11 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CreateVehicleUseCase {
+public class DeleteVehicleUseCase {
     private final VehicleGateway vehicleGateway;
 
-    public Vehicle createVehicle(Vehicle vehicle) {
-        return vehicleGateway.createVehicle(vehicle);
+    public void delete(String plate) {
+        vehicleGateway.deleteVehicle(plate);
     }
+
 }

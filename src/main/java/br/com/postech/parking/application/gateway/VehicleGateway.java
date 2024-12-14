@@ -12,4 +12,5 @@ public interface VehicleGateway {
     Vehicle createVehicle(Vehicle vehicle);
     List<Vehicle> getAllVehicles();
     Vehicle updateVehicle(String plate, Vehicle vehicle);
+    void deleteVehicle(String plate);
 }
