@@ -11,4 +11,5 @@ public interface VehicleGateway {
     Optional<Vehicle> findVehicleById(Long id);
     Vehicle createVehicle(Vehicle vehicle);
     List<Vehicle> getAllVehicles();
+    Vehicle updateVehicle(String plate, Vehicle vehicle);
 }

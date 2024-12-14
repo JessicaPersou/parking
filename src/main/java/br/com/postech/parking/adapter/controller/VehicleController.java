@@ -5,6 +5,7 @@ import br.com.postech.parking.domain.Vehicle;
 import br.com.postech.parking.domain.factory.VehicleFactory;
 import br.com.postech.parking.usecases.CreateVehicleUseCase;
 import br.com.postech.parking.usecases.FindVehicleUseCase;
+import br.com.postech.parking.usecases.UpdateVehicleUseCase;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,12 +34,14 @@ public class VehicleController {
     private final CreateVehicleUseCase createVehicleUseCase;
     private final VehicleFactory vehicleFactory;
     private final FindVehicleUseCase findVehicleUseCase;
+    private final UpdateVehicleUseCase updateVehicleUseCase;
 
     public VehicleController(CreateVehicleUseCase createVehicleUseCase, VehicleFactory vehicleFactory,
-            FindVehicleUseCase findVehicleUseCase) {
+            FindVehicleUseCase findVehicleUseCase, UpdateVehicleUseCase updateVehicleUseCase) {
         this.createVehicleUseCase = createVehicleUseCase;
         this.vehicleFactory = vehicleFactory;
         this.findVehicleUseCase = findVehicleUseCase;
+        this.updateVehicleUseCase = updateVehicleUseCase;
     }
 
     @PostMapping
@@ -63,4 +67,11 @@ public class VehicleController {
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
 
+    @PutMapping("/{plate}")
+    public ResponseEntity<VehicleDTO> updateVehicle(@PathVariable String plate, @Valid @RequestBody VehicleDTO vehicleDTO) {
+        Vehicle vehicle = vehicleFactory.createVehicle(vehicleDTO);
+        Vehicle updateVehicle = updateVehicleUseCase.updateVehicle(plate, vehicle);
+        VehicleDTO responseDTO = vehicleFactory.createVehicleDTO(updateVehicle);
+        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
+    }
 }

@@ -5,6 +5,7 @@ import br.com.postech.parking.application.gateway.VehicleGateway;
 import br.com.postech.parking.application.gateway.jpa.entity.VehicleEntity;
 import br.com.postech.parking.application.gateway.jpa.repository.VehicleRepository;
 import br.com.postech.parking.domain.Vehicle;
+import br.com.postech.parking.exception.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -54,11 +55,31 @@ public class VehicleJpaGateway implements VehicleGateway {
 
     @Override
     public List<Vehicle> getAllVehicles() {
-        return vehicleRepository.findAll()
+        List<Vehicle> vehiclesList = vehicleRepository.findAll()
                 .stream()
                 .map(this::convertToVehicle)
                 .collect(Collectors.toList());
+
+        log.info("Quantity of vehicles: {}", vehicleRepository.count());
+
+        return vehiclesList;
     }
+
+    @Override
+    public Vehicle updateVehicle(String plate, Vehicle vehicle) {
+
+        VehicleEntity vehicleExits = vehicleRepository.findByPlate(plate)
+                .orElseThrow(() -> new EntityNotFoundException("Vehicle not found with plate: " + plate));
+
+        vehicleExits.setId(vehicle.getId());
+        vehicleExits.setColor(vehicle.getColor());
+        vehicleExits.setExitDate(vehicle.getExitDate());
+
+        vehicleRepository.save(vehicleExits);
+        log.info("Update vehicle: {}", vehicleExits);
+        return convertToVehicle(vehicleExits);
+    }
+
 
     private Vehicle convertToVehicle(VehicleEntity entity) {
         return new Vehicle(
