@@ -2,7 +2,7 @@ package br.com.postech.parking.exception;
 
 import java.time.Instant;
 
-public class StandardError{
+public class StandardError {
 
     private Instant timestamp;
     private Integer status;
@@ -10,7 +10,8 @@ public class StandardError{
     private String message;
     private String path;
 
-    public StandardError() {}
+    public StandardError() {
+    }
 
     public Instant getTimestamp() {
         return timestamp;

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CreateVehicleUseCase {
+
     private final VehicleGateway vehicleGateway;
 
     public Vehicle createVehicle(Vehicle vehicle) {

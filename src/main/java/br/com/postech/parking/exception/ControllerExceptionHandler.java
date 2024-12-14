@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ControllerExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<StandardError> entityNotFoundException(EntityNotFoundException ex, HttpServletRequest request) {
+    public ResponseEntity<StandardError> entityNotFoundException(EntityNotFoundException ex,
+            HttpServletRequest request) {
         StandardError error = new StandardError();
         HttpStatus status = HttpStatus.NOT_FOUND;
         error.setStatus(status.value());
@@ -23,7 +24,8 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(EntityAlreadyExistsException.class)
-    public ResponseEntity<StandardError> entityAlreadyExistsException(EntityAlreadyExistsException ex, HttpServletRequest request) {
+    public ResponseEntity<StandardError> entityAlreadyExistsException(EntityAlreadyExistsException ex,
+            HttpServletRequest request) {
         StandardError error = new StandardError();
         HttpStatus status = HttpStatus.CONFLICT;
         error.setStatus(status.value());

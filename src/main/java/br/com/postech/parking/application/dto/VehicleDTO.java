@@ -3,14 +3,15 @@ package br.com.postech.parking.application.dto;
 import br.com.postech.parking.application.gateway.jpa.entity.VehicleEntity;
 import java.time.LocalDateTime;
 
-public record VehicleDTO (
-         Long id,
-         String plate,
-         String model,
-         String color,
-         LocalDateTime inputDate,
-         LocalDateTime exitDate
-){
+public record VehicleDTO(
+        Long id,
+        String plate,
+        String model,
+        String color,
+        LocalDateTime inputDate,
+        LocalDateTime exitDate
+) {
+
     public static VehicleDTO fromEntity(VehicleEntity entity) {
         return new VehicleDTO(
                 entity.getId(),

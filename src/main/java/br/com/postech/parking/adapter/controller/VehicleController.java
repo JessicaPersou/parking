@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class VehicleController {
 
     /***
-      TODO: Métodos HTTP
+     TODO: Métodos HTTP
      * findByPlate (GET by Plate)
      * findAll (GET)
      * updateVehicle (PUT)
@@ -68,12 +68,14 @@ public class VehicleController {
     @GetMapping
     public ResponseEntity<List<VehicleDTO>> findVehicles() {
         List<Vehicle> vehicles = findVehicleUseCase.findAllVehicles();
-        List<VehicleDTO> dtos = vehicles.stream().map(vehicleFactory::createVehicleDTO).collect(Collectors.toUnmodifiableList());
+        List<VehicleDTO> dtos = vehicles.stream().map(vehicleFactory::createVehicleDTO)
+                .collect(Collectors.toUnmodifiableList());
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
 
     @PutMapping("/{plate}")
-    public ResponseEntity<VehicleDTO> updateVehicle(@PathVariable String plate, @Valid @RequestBody VehicleDTO vehicleDTO) {
+    public ResponseEntity<VehicleDTO> updateVehicle(@PathVariable String plate,
+            @Valid @RequestBody VehicleDTO vehicleDTO) {
         Vehicle vehicle = vehicleFactory.createVehicle(vehicleDTO);
         Vehicle updateVehicle = updateVehicleUseCase.updateVehicle(plate, vehicle);
         VehicleDTO responseDTO = vehicleFactory.createVehicleDTO(updateVehicle);

@@ -8,9 +8,14 @@ import java.util.Optional;
 public interface VehicleGateway {
 
     Optional<Vehicle> getVehicleByPlate(String plate);
+
     Optional<Vehicle> findVehicleById(Long id);
+
     Vehicle createVehicle(Vehicle vehicle);
+
     List<Vehicle> getAllVehicles();
+
     Vehicle updateVehicle(String plate, Vehicle vehicle);
+
     void deleteVehicle(String plate);
 }
