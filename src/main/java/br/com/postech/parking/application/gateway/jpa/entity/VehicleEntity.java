@@ -1,5 +1,6 @@
 package br.com.postech.parking.application.gateway.jpa.entity;
 
+import br.com.postech.parking.domain.valueobject.VehiclePlate;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

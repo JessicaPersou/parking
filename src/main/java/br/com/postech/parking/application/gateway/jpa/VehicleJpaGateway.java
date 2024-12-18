@@ -5,6 +5,8 @@ import br.com.postech.parking.application.gateway.VehicleGateway;
 import br.com.postech.parking.application.gateway.jpa.entity.VehicleEntity;
 import br.com.postech.parking.application.gateway.jpa.repository.VehicleRepository;
 import br.com.postech.parking.domain.Vehicle;
+import br.com.postech.parking.domain.factory.VehicleFactory;
+import br.com.postech.parking.domain.valueobject.VehiclePlate;
 import br.com.postech.parking.exception.EntityAlreadyExistsException;
 import br.com.postech.parking.exception.EntityNotFoundException;
 import java.time.LocalDateTime;
@@ -21,6 +23,8 @@ import org.springframework.stereotype.Component;
 public class VehicleJpaGateway implements VehicleGateway {
 
     private final VehicleRepository vehicleRepository;
+    private final VehicleFactory vehicleFactory;
+
 
     @Override
     public Optional<Vehicle> getVehicleByPlate(String plate) {
@@ -37,19 +41,13 @@ public class VehicleJpaGateway implements VehicleGateway {
     public Vehicle createVehicle(Vehicle vehicle) {
         log.info("Creating vehicle: {}", vehicle);
 
-        Optional<VehicleEntity> existingVehicle = vehicleRepository.findByPlate(vehicle.getPlate());
+        Optional<VehicleEntity> existingVehicle = vehicleRepository.findByPlate(vehicle.getPlate().getValue());
         if (existingVehicle.isPresent()) {
-            log.info("Vehicle with plate {} already exists", vehicle.getPlate());
-            throw new EntityAlreadyExistsException("Vehicle with plate: " + vehicle.getPlate() + " already exists");
+            log.info("Vehicle with plate {} already exists", vehicle.getPlate().getValue());
+            throw new EntityAlreadyExistsException("Vehicle with plate: " + vehicle.getPlate().getValue() + " already exists");
         }
-        VehicleEntity entityToSave = new VehicleDTO(
-                vehicle.getId(),
-                vehicle.getPlate(),
-                vehicle.getModel(),
-                vehicle.getColor(),
-                vehicle.getInputDate(),
-                vehicle.getExitDate()
-        ).toEntity();
+        VehicleDTO dto = vehicleFactory.createVehicleDTO(vehicle);
+        VehicleEntity entityToSave = dto.toEntity();
 
         if (entityToSave.getInputDate() == null) {
             entityToSave.setInputDate(LocalDateTime.now());
@@ -80,6 +78,9 @@ public class VehicleJpaGateway implements VehicleGateway {
                 .orElseThrow(() -> new EntityNotFoundException("Vehicle not found with plate: " + plate));
 
         vehicleExits.setId(vehicle.getId());
+        if(vehicle.getPlate().equals(plate)){
+            vehicleExits.setPlate(plate);
+        }
         vehicleExits.setColor(vehicle.getColor());
         vehicleExits.setExitDate(vehicle.getExitDate());
 
@@ -98,7 +99,7 @@ public class VehicleJpaGateway implements VehicleGateway {
     private Vehicle convertToVehicle(VehicleEntity entity) {
         return new Vehicle(
                 entity.getId(),
-                entity.getPlate(),
+                VehiclePlate.createVehiclePlateFactory(entity.getPlate()),
                 entity.getModel(),
                 entity.getColor(),
                 entity.getInputDate(),

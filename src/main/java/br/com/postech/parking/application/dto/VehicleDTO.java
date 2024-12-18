@@ -1,6 +1,7 @@
 package br.com.postech.parking.application.dto;
 
 import br.com.postech.parking.application.gateway.jpa.entity.VehicleEntity;
+import br.com.postech.parking.domain.Vehicle;
 import java.time.LocalDateTime;
 
 public record VehicleDTO(
@@ -11,7 +12,6 @@ public record VehicleDTO(
         LocalDateTime inputDate,
         LocalDateTime exitDate
 ) {
-
     public static VehicleDTO fromEntity(VehicleEntity entity) {
         return new VehicleDTO(
                 entity.getId(),
@@ -20,6 +20,17 @@ public record VehicleDTO(
                 entity.getColor(),
                 entity.getInputDate(),
                 entity.getExitDate()
+        );
+    }
+
+    public static VehicleDTO fromVehicle(Vehicle vehicle) {
+        return new VehicleDTO(
+                vehicle.getId(),
+                vehicle.getPlate().getValue(),
+                vehicle.getModel(),
+                vehicle.getColor(),
+                vehicle.getInputDate(),
+                vehicle.getExitDate()
         );
     }
 
