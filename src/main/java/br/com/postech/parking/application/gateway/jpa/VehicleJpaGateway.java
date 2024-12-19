@@ -10,31 +10,35 @@ import br.com.postech.parking.domain.valueobject.VehiclePlate;
 import br.com.postech.parking.exception.EntityAlreadyExistsException;
 import br.com.postech.parking.exception.EntityNotFoundException;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class VehicleJpaGateway implements VehicleGateway {
 
     private final VehicleRepository vehicleRepository;
     private final VehicleFactory vehicleFactory;
 
+    public VehicleJpaGateway(VehicleRepository vehicleRepository, VehicleFactory vehicleFactory) {
+        this.vehicleRepository = vehicleRepository;
+        this.vehicleFactory = vehicleFactory;
+    }
 
     @Override
     public Optional<Vehicle> getVehicleByPlate(String plate) {
         return vehicleRepository.findByPlate(plate)
-                .map(this::convertToVehicle);
+                .map(this::convertToVehicleEntity);
     }
 
     @Override
     public Optional<Vehicle> findVehicleById(Long id) {
-        return vehicleRepository.findById(id).map(this::convertToVehicle);
+        return vehicleRepository.findById(id).map(this::convertToVehicleEntity);
     }
 
     @Override
@@ -56,14 +60,14 @@ public class VehicleJpaGateway implements VehicleGateway {
         VehicleEntity savedEntity = vehicleRepository.save(entityToSave);
         log.info("Save vehicle: {}", savedEntity);
 
-        return convertToVehicle(savedEntity);
+        return convertToVehicleEntity(savedEntity);
     }
 
     @Override
     public List<Vehicle> getAllVehicles() {
         List<Vehicle> vehiclesList = vehicleRepository.findAll()
                 .stream()
-                .map(this::convertToVehicle)
+                .map(this::convertToVehicleEntity)
                 .collect(Collectors.toList());
 
         log.info("Quantity of vehicles: {}", vehicleRepository.count());
@@ -78,15 +82,12 @@ public class VehicleJpaGateway implements VehicleGateway {
                 .orElseThrow(() -> new EntityNotFoundException("Vehicle not found with plate: " + plate));
 
         vehicleExits.setId(vehicle.getId());
-        if(vehicle.getPlate().equals(plate)){
-            vehicleExits.setPlate(plate);
-        }
         vehicleExits.setColor(vehicle.getColor());
         vehicleExits.setExitDate(vehicle.getExitDate());
 
         vehicleRepository.save(vehicleExits);
         log.info("Update vehicle: {}", vehicleExits);
-        return convertToVehicle(vehicleExits);
+        return convertToVehicleEntity(vehicleExits);
     }
 
     @Override
@@ -96,7 +97,7 @@ public class VehicleJpaGateway implements VehicleGateway {
         vehicleRepository.delete(vehicleExits);
     }
 
-    private Vehicle convertToVehicle(VehicleEntity entity) {
+    private Vehicle convertToVehicleEntity(VehicleEntity entity) {
         return new Vehicle(
                 entity.getId(),
                 VehiclePlate.createVehiclePlateFactory(entity.getPlate()),

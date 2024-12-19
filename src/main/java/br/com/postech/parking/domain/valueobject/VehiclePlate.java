@@ -1,6 +1,6 @@
 package br.com.postech.parking.domain.valueobject;
 
-import br.com.postech.parking.exception.PlateInvalidFormatException;
+import br.com.postech.parking.exception.InvalidFormatException;
 import java.util.Objects;
 
 public class VehiclePlate {
@@ -17,13 +17,13 @@ public class VehiclePlate {
 
     private String plateValidation(String plate) {
         if (plate == null || plate.isBlank()) {
-            throw new PlateInvalidFormatException("The plate field can't be empty");
+            throw new InvalidFormatException("The plate field can't be empty");
         }
 
         String replacePlate = plate.replaceAll("[^A-Za-z0-9]", "").toUpperCase();
 
         if (!replacePlate.matches("[A-Z]{3}\\d{4}") && !replacePlate.matches("[A-Z]{3}\\d{1}[A-Z]{1}\\d{2}")) {
-            throw new PlateInvalidFormatException("Plate format not accepted!");
+            throw new InvalidFormatException("Plate format not accepted!");
         }
         return replacePlate;
     }

@@ -3,7 +3,6 @@ package br.com.postech.parking.adapter.controller;
 import br.com.postech.parking.application.dto.VehicleDTO;
 import br.com.postech.parking.domain.Vehicle;
 import br.com.postech.parking.domain.factory.VehicleFactory;
-import br.com.postech.parking.domain.valueobject.VehiclePlate;
 import br.com.postech.parking.usecases.CreateVehicleUseCase;
 import br.com.postech.parking.usecases.DeleteVehicleUseCase;
 import br.com.postech.parking.usecases.FindVehicleUseCase;
@@ -63,7 +62,7 @@ public class VehicleController {
         List<Vehicle> vehicles = findVehicleUseCase.findAllVehicles();
         List<VehicleDTO> dtos = vehicles.stream()
                 .map(vehicleFactory::createVehicleDTO)
-                .collect(Collectors.toList());
+                .collect(Collectors.toUnmodifiableList());
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
 
