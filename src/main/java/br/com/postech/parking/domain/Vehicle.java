@@ -23,14 +23,23 @@ public class Vehicle {
         this.model = model;
         this.color = color;
         this.inputDate = validateDate(inputDate);
-        this.exitDate = exitDate;
+        this.exitDate = validateExitDate(inputDate, exitDate);
     }
 
     public LocalDateTime validateDate(LocalDateTime inputDate) {
+        if (inputDate == null) {
+            return LocalDateTime.now();
+        }
         if(!inputDate.toLocalDate().isEqual(LocalDate.now())){
             throw new InvalidFormatException("The date must be current");
         }
         return inputDate;
     }
 
+    public LocalDateTime validateExitDate(LocalDateTime inputDate, LocalDateTime exitDate) {
+        if(inputDate.isAfter(exitDate)){
+            throw new InvalidFormatException("The date must be after exit date");
+        }
+        return inputDate;
+    }
 }

@@ -50,12 +50,9 @@ public class VehicleJpaGateway implements VehicleGateway {
             log.info("Vehicle with plate {} already exists", vehicle.getPlate().getValue());
             throw new EntityAlreadyExistsException("Vehicle with plate: " + vehicle.getPlate().getValue() + " already exists");
         }
+
         VehicleDTO dto = vehicleFactory.createVehicleDTO(vehicle);
         VehicleEntity entityToSave = dto.toEntity();
-
-        if (entityToSave.getInputDate() == null) {
-            entityToSave.setInputDate(LocalDateTime.now());
-        }
 
         VehicleEntity savedEntity = vehicleRepository.save(entityToSave);
         log.info("Save vehicle: {}", savedEntity);
