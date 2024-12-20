@@ -1,4 +1,4 @@
-package br.com.postech.parking.usecases;
+package br.com.postech.parking.usecase;
 
 import br.com.postech.parking.application.gateway.VehicleGateway;
 import br.com.postech.parking.domain.Vehicle;

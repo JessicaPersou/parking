@@ -22,22 +22,18 @@ public class Vehicle {
         this.plate = VehiclePlate.createVehiclePlateFactory(plate.getValue());
         this.model = model;
         this.color = color;
-        this.inputDate = validateDate(inputDate);
-        this.exitDate = validateExitDate(inputDate, exitDate);
+        this.inputDate = inputDate;
+        this.exitDate = exitDate;
     }
 
-    public LocalDateTime validateDate(LocalDateTime inputDate) {
-        if (inputDate == null) {
-            return LocalDateTime.now();
+    public void initializeInputDateIfNull() {
+        if (this.inputDate == null) {
+            this.inputDate = LocalDateTime.now();
         }
-        if(!inputDate.toLocalDate().isEqual(LocalDate.now())){
-            throw new InvalidFormatException("The date must be current");
-        }
-        return inputDate;
     }
 
     public LocalDateTime validateExitDate(LocalDateTime inputDate, LocalDateTime exitDate) {
-        if(inputDate.isAfter(exitDate)){
+        if (inputDate.isAfter(exitDate)) {
             throw new InvalidFormatException("The date must be after exit date");
         }
         return inputDate;
