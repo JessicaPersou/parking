@@ -1,5 +1,6 @@
 package br.com.postech.parking.vehicle.application.gateway.jpa;
 
+import br.com.postech.parking.exception.EntityNotFoundException;
 import br.com.postech.parking.vehicle.application.dto.VehicleDTO;
 import br.com.postech.parking.vehicle.application.gateway.VehicleGateway;
 import br.com.postech.parking.vehicle.application.gateway.jpa.entity.VehicleEntity;
@@ -7,8 +8,6 @@ import br.com.postech.parking.vehicle.application.gateway.jpa.repository.Vehicle
 import br.com.postech.parking.vehicle.domain.Vehicle;
 import br.com.postech.parking.vehicle.domain.factory.VehicleFactory;
 import br.com.postech.parking.vehicle.domain.valueobject.VehiclePlate;
-import br.com.postech.parking.exception.EntityAlreadyExistsException;
-import br.com.postech.parking.exception.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,12 +40,6 @@ public class VehicleJpaGateway implements VehicleGateway {
     @Override
     public Vehicle createVehicle(Vehicle vehicle) {
         log.info("Creating vehicle: {}", vehicle);
-
-        Optional<VehicleEntity> existingVehicle = vehicleRepository.findByPlate(vehicle.getPlate().getValue());
-        if (existingVehicle.isPresent()) {
-            log.info("Vehicle with plate {} already exists", vehicle.getPlate().getValue());
-            throw new EntityAlreadyExistsException("Vehicle with plate: " + vehicle.getPlate().getValue() + " already exists");
-        }
 
         VehicleDTO dto = vehicleFactory.createVehicleDTO(vehicle);
         VehicleEntity entityToSave = dto.toVehicleEntity();
@@ -88,6 +81,7 @@ public class VehicleJpaGateway implements VehicleGateway {
     public void deleteVehicle(String plate) {
         VehicleEntity vehicleExits = vehicleRepository.findByPlate(plate)
                 .orElseThrow(() -> new EntityNotFoundException("Vehicle not found with plate: " + plate));
+        log.info("Delete vehicle: {}", vehicleExits);
         vehicleRepository.delete(vehicleExits);
     }
 

@@ -21,7 +21,7 @@ public class UserDocument {
         log.info("Validating CPF: {}", cpf);
         cpf = cpf.replaceAll("\\D", "");
 
-        if(cpf.length() != 11) {
+        if (cpf.length() != 11) {
             log.info("CPF haven`t quantity of digits needed: {}, please insert 11 digits", cpf);
             throw new InvalidFormatException("CPF should be 11 digits");
         }

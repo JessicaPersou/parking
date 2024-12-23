@@ -9,26 +9,26 @@ public class UserEmail {
 
     private final String email;
 
-    private UserEmail(String email){
+    private UserEmail(String email) {
         this.email = email;
     }
 
-    public static UserEmail createEmailFactory(String email){
+    public static UserEmail createEmailFactory(String email) {
         return new UserEmail(email);
     }
 
-    private String validationEmail(String email){
+    private String validationEmail(String email) {
         log.info("Validating Email: {}", email);
         String emailValidator = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
 
-        if(!email.matches(emailValidator)){
+        if (!email.matches(emailValidator)) {
             log.info("Invalid email format: {}", email);
             throw new InvalidFormatException("Invalid email format.");
         }
         return email;
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return email;
     }
 

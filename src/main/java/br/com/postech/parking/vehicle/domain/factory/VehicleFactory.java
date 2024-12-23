@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class VehicleFactory {
+
     public Vehicle createVehicle(VehicleDTO vehicleDTO) {
         return new Vehicle(
                 vehicleDTO.id(),
