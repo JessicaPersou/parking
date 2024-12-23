@@ -10,6 +10,7 @@ import br.com.postech.parking.vehicle.usecase.UpdateVehicleUseCase;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/vehicles")
+@RequiredArgsConstructor
 public class VehicleController {
 
     private final CreateVehicleUseCase createVehicleUseCase;
@@ -30,16 +32,6 @@ public class VehicleController {
     private final FindVehicleUseCase findVehicleUseCase;
     private final UpdateVehicleUseCase updateVehicleUseCase;
     private final DeleteVehicleUseCase deleteVehicleUseCase;
-
-    public VehicleController(CreateVehicleUseCase createVehicleUseCase, VehicleFactory vehicleFactory,
-            FindVehicleUseCase findVehicleUseCase, UpdateVehicleUseCase updateVehicleUseCase,
-            DeleteVehicleUseCase deleteVehicleUseCase) {
-        this.createVehicleUseCase = createVehicleUseCase;
-        this.vehicleFactory = vehicleFactory;
-        this.findVehicleUseCase = findVehicleUseCase;
-        this.updateVehicleUseCase = updateVehicleUseCase;
-        this.deleteVehicleUseCase = deleteVehicleUseCase;
-    }
 
     @PostMapping
     public ResponseEntity<VehicleDTO> createVehicle(@Valid @RequestBody VehicleDTO vehicleDTO) {

@@ -7,8 +7,8 @@ import br.com.postech.parking.vehicle.application.gateway.jpa.repository.Vehicle
 import br.com.postech.parking.vehicle.domain.Vehicle;
 import br.com.postech.parking.vehicle.domain.factory.VehicleFactory;
 import br.com.postech.parking.vehicle.domain.valueobject.VehiclePlate;
-import br.com.postech.parking.vehicle.exception.EntityAlreadyExistsException;
-import br.com.postech.parking.vehicle.exception.EntityNotFoundException;
+import br.com.postech.parking.exception.EntityAlreadyExistsException;
+import br.com.postech.parking.exception.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

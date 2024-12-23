@@ -1,7 +1,7 @@
 package br.com.postech.parking.vehicle.domain;
 
+import br.com.postech.parking.exception.InvalidFormatException;
 import br.com.postech.parking.vehicle.domain.valueobject.VehiclePlate;
-import br.com.postech.parking.vehicle.exception.InvalidFormatException;
 import java.time.LocalDateTime;
 import lombok.Getter;
 
@@ -32,8 +32,11 @@ public class Vehicle {
     }
 
     public LocalDateTime validateExitDate(LocalDateTime inputDate, LocalDateTime exitDate) {
+        if (exitDate == null) {
+            return inputDate;
+        }
         if (inputDate.isAfter(exitDate)) {
-            throw new InvalidFormatException("The date must be after exit date");
+            throw new InvalidFormatException("The input date must not be after the exit date.");
         }
         return inputDate;
     }
