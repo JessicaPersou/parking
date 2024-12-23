@@ -16,6 +16,7 @@ public class FindVehicleUseCase {
     private final VehicleGateway vehicleGateway;
 
     public Vehicle findVehicle(Long id) {
+        log.info("Find vehicle with id {}", id);
         return vehicleGateway.findVehicleById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Vehicle not found with id: " + id));
     }

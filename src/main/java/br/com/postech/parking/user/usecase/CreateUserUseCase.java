@@ -20,7 +20,7 @@ public class CreateUserUseCase {
 //            throw new RuntimeException("User haven`t vehicle");
 //        }
 
-        if(!user.isLegalAge()){
+        if (!user.isLegalAge()) {
             throw new RuntimeException("User isan`t legal age");
         }
 

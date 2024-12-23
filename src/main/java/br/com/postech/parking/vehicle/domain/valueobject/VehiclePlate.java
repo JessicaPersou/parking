@@ -13,7 +13,7 @@ public class VehiclePlate {
         this.plate = plateValidation(plate);
     }
 
-    public static VehiclePlate createVehiclePlateFactory(String plateValue){
+    public static VehiclePlate createVehiclePlateFactory(String plateValue) {
         return new VehiclePlate(plateValue);
     }
 

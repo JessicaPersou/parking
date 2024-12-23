@@ -12,6 +12,7 @@ public record VehicleDTO(
         LocalDateTime inputDate,
         LocalDateTime exitDate
 ) {
+
     public static VehicleDTO fromVehicleEntity(VehicleEntity entity) {
         return new VehicleDTO(
                 entity.getId(),

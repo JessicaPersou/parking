@@ -10,6 +10,7 @@ import lombok.Getter;
 
 @Getter
 public class User {
+
     private Long id;
     private String firstName;
     private String lastName;
@@ -31,15 +32,15 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public Long getAge(){
+    public Long getAge() {
         return birthdate.until(LocalDate.now(), ChronoUnit.YEARS);
     }
 
-    public boolean isLegalAge(){
+    public boolean isLegalAge() {
         return getAge() > 18;
     }
 
-    public boolean haveVehicle(){
+    public boolean haveVehicle() {
         return vehicles.isEmpty();
     }
 }

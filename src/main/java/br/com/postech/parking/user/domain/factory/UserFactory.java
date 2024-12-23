@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserFactory {
+
     public User createUser(UserDTO dto) {
         return new User(
                 dto.id(),
