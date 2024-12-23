@@ -12,14 +12,14 @@ independente de frameworks ou tecnologias específicas.
 1. Controller recebe a requisição e transforma os dados de entrada.
 2. Controller chama o Caso de Uso, passando os dados processados.
 3. O Caso de Uso interage com as Entidades e usa interfaces de repositórios para acessar dados.
-4. O resultado do Caso de Uso é enviado para um Presenter, que adapta o dado para a interface.
-5. Presenter devolve a resposta ao Controller, que retorna ao cliente.
+4. O resultado do Caso de Uso é enviado para um JpaGateway, que adapta o dado para a interface.
+5. Gateway devolve a resposta ao Controller, que retorna ao cliente.
 
 ### Tecnologias Utilizadas
 
 - **Java 21**
 - **Spring Framework 3.0**
-- **Docker Compose** 
+- **Docker Compose**- (Em implementação) 
 
 ### Como Executar
 
