@@ -13,10 +13,6 @@ public record UserDTO(
         String phoneNumber
 ) {
 
-    /***
-     * TODO: criar métodos de conversão, entity, dto e domain
-     */
-
     public UserEntity toUserEntity() {
         return UserEntity.builder()
                 .birthdate(this.birthdate)
