@@ -12,20 +12,17 @@ import br.com.postech.parking.user.domain.valueobject.UserEmail;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class UserJpaGateway implements UserGateway {
 
     public final UserRepository userRepository;
     private final UserFactory userFactory;
-
-    public UserJpaGateway(UserRepository userRepository, UserFactory userFactory) {
-        this.userRepository = userRepository;
-        this.userFactory = userFactory;
-    }
 
     public User createUser(User user) {
         UserDTO dto = userFactory.createUserDTO(user);
