@@ -29,6 +29,7 @@ public class UserController {
 
     public final CreateUserUseCase userUseCase;
     public final UserFactory userFactory;
+
     private final CreateUserUseCase createUserUseCase;
     private final FindUserUseCase findUserUseCase;
     private final UpdateUserUseCase updateUserUseCase;

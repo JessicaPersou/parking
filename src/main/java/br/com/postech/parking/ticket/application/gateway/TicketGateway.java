@@ -3,17 +3,19 @@ package br.com.postech.parking.ticket.application.gateway;
 import br.com.postech.parking.ticket.domain.Ticket;
 import br.com.postech.parking.user.domain.User;
 import br.com.postech.parking.vehicle.domain.Vehicle;
+import java.util.List;
+import java.util.Optional;
 
 public interface TicketGateway {
 
-    public Ticket generateTicket();
+    public Ticket generateTicket(Ticket ticket);
 
-    public Ticket getTicket();
+    public Optional<Ticket> getTicket(Long id);
 
-    public Ticket allTickets();
+    public List<Ticket> allTickets();
 
-    public Ticket updateTicket(Ticket ticket, User user);
+    public Ticket updateTicket(Long id, Ticket ticket);
 
-    public Ticket deleteTicket(Ticket ticket);
+    public void deleteTicket(Long id);
 
 }

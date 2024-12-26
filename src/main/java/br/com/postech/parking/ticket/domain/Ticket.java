@@ -20,4 +20,16 @@ public class Ticket {
         this.status = status;
         this.price = price;
     }
+
+    public boolean isExpired() {
+        return endTime.isBefore(LocalDateTime.now());
+    }
+
+    public boolean isValid(){
+        return endTime.isAfter(LocalDateTime.now());
+    }
+
+    public boolean priceIsValid(BigDecimal price) {
+        return this.price.compareTo(price) >= 0 ;
+    }
 }
