@@ -10,7 +10,7 @@ public class UserEmail {
     private final String email;
 
     private UserEmail(String email) {
-        this.email = email;
+        this.email = validationEmail(email);
     }
 
     public static UserEmail createEmailFactory(String email) {

@@ -24,17 +24,17 @@ public class UserFactory {
         );
     }
 
-    public UserDTO createUserDTO(User entity) {
+    public UserDTO createUserDTO(User user) {
         return new UserDTO(
-                entity.getId(),
-                entity.getFirstName(),
-                entity.getLastName(),
-                entity.getBirthdate(),
-                entity.getUserDocument().getCpf(),
-                entity.getUserEmail().getEmail(),
-                entity.getPhoneNumber(),
-                entity.getVehicles().stream().map(Vehicle::getId).toList(),
-                entity.getTickets().stream().map(Ticket::getId).toList()
+                user.getId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getBirthdate(),
+                user.getUserDocument().getCpf(),
+                user.getUserEmail().getEmail(),
+                user.getPhoneNumber(),
+                user.getVehicles().stream().map(Vehicle::getId).toList(),
+                user.getTickets().stream().map(Ticket::getId).toList()
         );
     }
 

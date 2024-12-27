@@ -1,5 +1,6 @@
 package br.com.postech.parking.user.usecase;
 
+import br.com.postech.parking.exception.AgeNotPermitedException;
 import br.com.postech.parking.user.application.gateway.UserGateway;
 import br.com.postech.parking.user.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -16,16 +17,12 @@ public class CreateUserUseCase {
     public User createUserUseCase(User user) {
         log.info("Creating user: {}", user);
 
-//        if(!user.hasVehicle()){
-//            throw new RuntimeException("User haven`t vehicle");
-//        }
-
         if (!user.isLegalAge()) {
-            throw new RuntimeException("User isan`t legal age");
+            throw new AgeNotPermitedException("User is not of legal age");
         }
 
-        userGateway.createUser(user);
-        log.info("Created user: {}", user);
-        return user;
+        User savedUser = userGateway.createUser(user);
+        log.info("Created user: {}", savedUser);
+        return savedUser;
     }
 }

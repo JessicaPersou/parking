@@ -9,7 +9,6 @@ import br.com.postech.parking.user.usecase.FindUserUseCase;
 import br.com.postech.parking.user.usecase.UpdateUserUseCase;
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
 
-    public final CreateUserUseCase userUseCase;
     public final UserFactory userFactory;
 
     private final CreateUserUseCase createUserUseCase;
@@ -54,8 +52,7 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         List<User> users = findUserUseCase.findAllUsers();
-        List<UserDTO> userDTOs = users.stream().map(userFactory::createUserDTO)
-                .collect(Collectors.toUnmodifiableList());
+        List<UserDTO> userDTOs = users.stream().map(userFactory::createUserDTO).toList();
         return ResponseEntity.ok(userDTOs);
     }
 
