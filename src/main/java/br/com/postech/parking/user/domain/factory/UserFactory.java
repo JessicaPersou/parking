@@ -6,7 +6,9 @@ import br.com.postech.parking.user.domain.User;
 import br.com.postech.parking.user.domain.valueobject.UserDocument;
 import br.com.postech.parking.user.domain.valueobject.UserEmail;
 import br.com.postech.parking.vehicle.domain.Vehicle;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
