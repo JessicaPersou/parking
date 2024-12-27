@@ -1,10 +1,12 @@
 package br.com.postech.parking.user.domain;
 
+import br.com.postech.parking.ticket.domain.Ticket;
 import br.com.postech.parking.user.domain.valueobject.UserDocument;
 import br.com.postech.parking.user.domain.valueobject.UserEmail;
 import br.com.postech.parking.vehicle.domain.Vehicle;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 
@@ -18,7 +20,8 @@ public class User {
     private UserDocument userDocument;
     private UserEmail userEmail;
     private String phoneNumber;
-    private List<Vehicle> vehicles;
+    private List<Vehicle> vehicles = new ArrayList<>();
+    private List<Ticket> tickets = new ArrayList<>();
 
     public User(Long id, String firstName, String lastName, LocalDate birthdate, UserDocument document,
             UserEmail userEmail,
@@ -41,7 +44,7 @@ public class User {
     }
 
     public boolean haveVehicle() {
-        return vehicles.isEmpty();
+        return !vehicles.isEmpty();
     }
 }
 

@@ -1,10 +1,12 @@
 package br.com.postech.parking.vehicle.domain.factory;
 
 
+import br.com.postech.parking.ticket.domain.Ticket;
 import br.com.postech.parking.vehicle.application.dto.VehicleDTO;
 import br.com.postech.parking.vehicle.application.gateway.jpa.entity.VehicleEntity;
 import br.com.postech.parking.vehicle.domain.Vehicle;
 import br.com.postech.parking.vehicle.domain.valueobject.VehiclePlate;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -28,16 +30,10 @@ public class VehicleFactory {
                 vehicle.getModel(),
                 vehicle.getColor(),
                 vehicle.getInputDate(),
-                vehicle.getExitDate()
+                vehicle.getExitDate(),
+                vehicle.getOwner() != null ? vehicle.getOwner().getId() : null,
+                vehicle.getTickets().stream().map(Ticket::getId).toList()
         );
-    }
-
-    public VehicleDTO createVehicleDTO(VehicleEntity vehicleEntity) {
-        return VehicleDTO.fromVehicleEntity(vehicleEntity);
-    }
-
-    public VehicleEntity createVehicleEntity(Vehicle vehicle) {
-        return VehicleDTO.fromVehicleDomain(vehicle).toVehicleEntity();
     }
 }
 

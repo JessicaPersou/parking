@@ -16,7 +16,7 @@ public class CreateUserUseCase {
     public User createUserUseCase(User user) {
         log.info("Creating user: {}", user);
 
-//        if(!user.haveVehicle()){
+//        if(!user.hasVehicle()){
 //            throw new RuntimeException("User haven`t vehicle");
 //        }
 
