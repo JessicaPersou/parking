@@ -24,7 +24,7 @@ public class TicketJpaGateway  implements TicketGateway {
 
     @Override
     public Ticket generateTicket(Ticket ticket) {
-        TicketDTO dto = ticketFactory.createTicket(ticket);
+        TicketDTO dto = ticketFactory.createTicketDTO(ticket);
         TicketEntity entity = dto.toTicketEntity();
 
         ticketRepository.save(entity);

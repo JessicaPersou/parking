@@ -36,9 +36,9 @@ public class TicketController {
 
     @PostMapping
     public ResponseEntity<TicketDTO> createNewUser(@Valid @RequestBody TicketDTO ticketDTO) {
-        Ticket ticket = ticketFactory.createTicket(ticketDTO);
+        Ticket ticket = ticketFactory.createTicketDTO(ticketDTO);
         Ticket createTicket = createTicketUseCase.createTicketUseCase(ticket);
-        TicketDTO responseDTO = ticketFactory.createTicket(createTicket);
+        TicketDTO responseDTO = ticketFactory.createTicketDTO(createTicket);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
@@ -46,14 +46,14 @@ public class TicketController {
     @GetMapping("/{id}")
     public ResponseEntity<TicketDTO> getTicket(@PathVariable Long id) {
         Ticket ticket = findTicketUseCase.findTicket(id);
-        TicketDTO ticketDTO = ticketFactory.createTicket(ticket);
+        TicketDTO ticketDTO = ticketFactory.createTicketDTO(ticket);
         return ResponseEntity.ok(ticketDTO);
     }
 
     @GetMapping
     public ResponseEntity<List<TicketDTO>> getAllTickets() {
         List<Ticket> tickets = findTicketUseCase.findAllTickets();
-        List<TicketDTO> ticketDTOs = tickets.stream().map(ticketFactory::createTicket)
+        List<TicketDTO> ticketDTOs = tickets.stream().map(ticketFactory::createTicketDTO)
                 .collect(Collectors.toUnmodifiableList());
         return ResponseEntity.ok(ticketDTOs);
     }
@@ -61,8 +61,8 @@ public class TicketController {
     @PutMapping("/{id}")
     public ResponseEntity<TicketDTO> updateTicket(@PathVariable Long id,
             @Valid @RequestBody TicketDTO ticketDTO) {
-        Ticket ticket = updateTicketUseCase.updateTicket(id, ticketFactory.createTicket(ticketDTO));
-        TicketDTO updateTicketDTO = ticketFactory.createTicket(ticket);
+        Ticket ticket = updateTicketUseCase.updateTicket(id, ticketFactory.createTicketDTO(ticketDTO));
+        TicketDTO updateTicketDTO = ticketFactory.createTicketDTO(ticket);
         return ResponseEntity.status(HttpStatus.OK).body(updateTicketDTO);
     }
 

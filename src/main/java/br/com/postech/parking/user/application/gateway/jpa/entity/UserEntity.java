@@ -1,12 +1,18 @@
 package br.com.postech.parking.user.application.gateway.jpa.entity;
 
+import br.com.postech.parking.ticket.application.gateway.jpa.entity.TicketEntity;
+import br.com.postech.parking.vehicle.application.gateway.jpa.entity.VehicleEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -41,4 +47,10 @@ public class UserEntity {
     private String userEmail;
 
     private String phoneNumber;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<VehicleEntity> vehicles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<TicketEntity> tickets = new ArrayList<>();
 }
