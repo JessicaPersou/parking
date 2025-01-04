@@ -6,7 +6,9 @@ import br.com.postech.parking.user.domain.User;
 import br.com.postech.parking.vehicle.domain.valueobject.VehiclePlate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import lombok.Getter;
 
 @Getter
@@ -18,7 +20,7 @@ public class Vehicle {
     private String color;
     private LocalDateTime inputDate;
     private LocalDateTime exitDate;
-    private User owner; // Referência ao usuário dono do veículo
+    private User owner;
     private List<Ticket> tickets = new ArrayList<>();
 
     public Vehicle(Long id, VehiclePlate plate, String model, String color, LocalDateTime inputDate,
@@ -39,7 +41,7 @@ public class Vehicle {
 
     public LocalDateTime validateExitDate(LocalDateTime inputDate, LocalDateTime exitDate) {
         if (exitDate == null) {
-            return inputDate;
+            return null;
         }
         if (inputDate.isAfter(exitDate)) {
             throw new InvalidFormatException("The input date must not be after the exit date.");
@@ -48,6 +50,7 @@ public class Vehicle {
     }
 
     public void addTicket(Ticket ticket) {
+        Objects.requireNonNull(ticket, "Object can't be null");
         this.tickets.add(ticket);
     }
 
@@ -56,7 +59,7 @@ public class Vehicle {
     }
 
     public List<Ticket> getTickets() {
-        return tickets;
+        return Collections.unmodifiableList(tickets);
     }
 
     public void setOwner(User owner) {

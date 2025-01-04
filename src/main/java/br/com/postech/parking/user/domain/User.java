@@ -40,7 +40,7 @@ public class User {
     }
 
     public boolean isLegalAge() {
-        return getAge() > 18;
+        return getAge() >= 18;
     }
 
     public boolean haveVehicle() {

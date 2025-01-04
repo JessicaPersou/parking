@@ -38,8 +38,8 @@ public record UserDTO(
                 entity.getUserDocument(),
                 entity.getUserEmail(),
                 entity.getPhoneNumber(),
-                entity.getVehicles().stream().map(VehicleEntity::getId).toList(), // Mapear IDs dos veículos
-                entity.getTickets().stream().map(TicketEntity::getId).toList()   // Mapear IDs dos tickets
+                entity.getVehicles().stream().map(VehicleEntity::getId).toList(),
+                entity.getTickets().stream().map(TicketEntity::getId).toList()
         );
     }
 }

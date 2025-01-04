@@ -6,7 +6,9 @@ import br.com.postech.parking.user.domain.User;
 import br.com.postech.parking.user.domain.valueobject.UserDocument;
 import br.com.postech.parking.user.domain.valueobject.UserEmail;
 import br.com.postech.parking.vehicle.domain.Vehicle;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -24,17 +26,17 @@ public class UserFactory {
         );
     }
 
-    public UserDTO createUserDTO(User entity) {
+    public UserDTO createUserDTO(User user) {
         return new UserDTO(
-                entity.getId(),
-                entity.getFirstName(),
-                entity.getLastName(),
-                entity.getBirthdate(),
-                entity.getUserDocument().getCpf(),
-                entity.getUserEmail().getEmail(),
-                entity.getPhoneNumber(),
-                entity.getVehicles().stream().map(Vehicle::getId).toList(),
-                entity.getTickets().stream().map(Ticket::getId).toList()
+                user.getId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getBirthdate(),
+                user.getUserDocument().getCpf(),
+                user.getUserEmail().getEmail(),
+                user.getPhoneNumber(),
+                user.getVehicles().stream().map(Vehicle::getId).toList(),
+                user.getTickets().stream().map(Ticket::getId).toList()
         );
     }
 
