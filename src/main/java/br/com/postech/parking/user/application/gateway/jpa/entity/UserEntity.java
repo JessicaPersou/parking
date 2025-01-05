@@ -48,7 +48,7 @@ public class UserEntity {
 
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<VehicleEntity> vehicles = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")

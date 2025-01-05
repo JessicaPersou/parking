@@ -1,6 +1,11 @@
 package br.com.postech.parking.vehicle.application.gateway.jpa;
 
 import br.com.postech.parking.exception.EntityNotFoundException;
+import br.com.postech.parking.user.application.gateway.jpa.entity.UserEntity;
+import br.com.postech.parking.user.application.gateway.jpa.repository.UserRepository;
+import br.com.postech.parking.user.domain.User;
+import br.com.postech.parking.user.domain.valueobject.UserDocument;
+import br.com.postech.parking.user.domain.valueobject.UserEmail;
 import br.com.postech.parking.vehicle.application.dto.VehicleDTO;
 import br.com.postech.parking.vehicle.application.gateway.VehicleGateway;
 import br.com.postech.parking.vehicle.application.gateway.jpa.entity.VehicleEntity;
@@ -11,20 +16,18 @@ import br.com.postech.parking.vehicle.domain.valueobject.VehiclePlate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class VehicleJpaGateway implements VehicleGateway {
 
     private final VehicleRepository vehicleRepository;
+    private final UserRepository userRepository;
     private final VehicleFactory vehicleFactory;
-
-    public VehicleJpaGateway(VehicleRepository vehicleRepository, VehicleFactory vehicleFactory) {
-        this.vehicleRepository = vehicleRepository;
-        this.vehicleFactory = vehicleFactory;
-    }
 
     @Override
     public Optional<Vehicle> getVehicleByPlate(String plate) {
@@ -38,16 +41,19 @@ public class VehicleJpaGateway implements VehicleGateway {
     }
 
     @Override
-    public Vehicle createVehicle(Vehicle vehicle) {
+    public Vehicle createVehicle(Vehicle vehicle, User owner) {
         log.info("Creating vehicle: {}", vehicle);
 
         VehicleDTO dto = vehicleFactory.createVehicleDTO(vehicle);
         VehicleEntity entityToSave = dto.toVehicleEntity();
 
-        VehicleEntity savedEntity = vehicleRepository.save(entityToSave);
-        log.info("Save vehicle: {}", savedEntity);
+        UserEntity userEntity = userRepository.findById(owner.getId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + owner.getId()));
 
-        return convertToVehicleEntity(savedEntity);
+        entityToSave.setUser(userEntity);
+
+        log.info("Entity to save vehicle: {}", entityToSave);
+        return convertToVehicleEntity(vehicleRepository.save(entityToSave));
     }
 
     @Override
@@ -70,7 +76,6 @@ public class VehicleJpaGateway implements VehicleGateway {
 
         vehicleExits.setId(vehicle.getId());
         vehicleExits.setColor(vehicle.getColor());
-        vehicleExits.setExitDate(vehicle.getExitDate());
 
         vehicleRepository.save(vehicleExits);
         log.info("Update vehicle: {}", vehicleExits);
@@ -90,9 +95,7 @@ public class VehicleJpaGateway implements VehicleGateway {
                 entity.getId(),
                 VehiclePlate.createVehiclePlateFactory(entity.getPlate()),
                 entity.getModel(),
-                entity.getColor(),
-                entity.getInputDate(),
-                entity.getExitDate()
+                entity.getColor()
         );
     }
 }

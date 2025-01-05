@@ -1,5 +1,6 @@
 package br.com.postech.parking.vehicle.adapter.controller;
 
+import br.com.postech.parking.ticket.domain.Ticket;
 import br.com.postech.parking.vehicle.application.dto.VehicleDTO;
 import br.com.postech.parking.vehicle.domain.Vehicle;
 import br.com.postech.parking.vehicle.domain.factory.VehicleFactory;
@@ -36,8 +37,15 @@ public class VehicleController {
     @PostMapping
     public ResponseEntity<VehicleDTO> createVehicle(@Valid @RequestBody VehicleDTO vehicleDTO) {
         Vehicle vehicle = vehicleFactory.createVehicle(vehicleDTO);
-        Vehicle createdVehicle = createVehicleUseCase.createVehicle(vehicle);
-        VehicleDTO responseDTO = vehicleFactory.createVehicleDTO(createdVehicle);
+        Vehicle createdVehicle = createVehicleUseCase.createVehicle(vehicle, vehicleDTO.userId());
+        VehicleDTO responseDTO = new VehicleDTO(
+                createdVehicle.getId(),
+                createdVehicle.getPlate().getValue(),
+                createdVehicle.getModel(),
+                createdVehicle.getColor(),
+                vehicleDTO.userId(),
+                createdVehicle.getTickets().stream().map(Ticket::getId).toList()
+        );
 
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
@@ -49,22 +57,22 @@ public class VehicleController {
         return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
 
-    @GetMapping
-    public ResponseEntity<List<VehicleDTO>> findVehicles() {
-        List<Vehicle> vehicles = findVehicleUseCase.findAllVehicles();
-        List<VehicleDTO> dtos = vehicles.stream()
-                .map(vehicleFactory::createVehicleDTO)
-                .collect(Collectors.toUnmodifiableList());
-        return ResponseEntity.status(HttpStatus.OK).body(dtos);
-    }
-
-    @PutMapping("/{plate}")
-    public ResponseEntity<VehicleDTO> updateVehicle(@PathVariable String plate,
-            @Valid @RequestBody VehicleDTO vehicleDTO) {
-        Vehicle updateVehicle = updateVehicleUseCase.updateVehicle(plate, vehicleFactory.createVehicle(vehicleDTO));
-        VehicleDTO responseDTO = vehicleFactory.createVehicleDTO(updateVehicle);
-        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
-    }
+//    @GetMapping
+//    public ResponseEntity<List<VehicleDTO>> findVehicles() {
+//        List<Vehicle> vehicles = findVehicleUseCase.findAllVehicles();
+//        List<VehicleDTO> dtos = vehicles.stream()
+//                .map(vehicleFactory::createVehicleDTO)
+//                .collect(Collectors.toUnmodifiableList());
+//        return ResponseEntity.status(HttpStatus.OK).body(dtos);
+//    }
+//
+//    @PutMapping("/{plate}")
+//    public ResponseEntity<VehicleDTO> updateVehicle(@PathVariable String plate,
+//            @Valid @RequestBody VehicleDTO vehicleDTO) {
+//        Vehicle updateVehicle = updateVehicleUseCase.updateVehicle(plate, vehicleFactory.createVehicle(vehicleDTO));
+//        VehicleDTO responseDTO = vehicleFactory.createVehicleDTO(updateVehicle);
+//        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
+//    }
 
     @DeleteMapping("/{plate}")
     public ResponseEntity<Void> deleteVehicle(@PathVariable String plate) {

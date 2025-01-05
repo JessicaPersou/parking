@@ -5,7 +5,6 @@ import br.com.postech.parking.ticket.domain.Ticket;
 import br.com.postech.parking.user.application.gateway.jpa.entity.UserEntity;
 import br.com.postech.parking.vehicle.application.gateway.jpa.entity.VehicleEntity;
 import br.com.postech.parking.vehicle.domain.Vehicle;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public record VehicleDTO(
@@ -13,8 +12,6 @@ public record VehicleDTO(
         String plate,
         String model,
         String color,
-        LocalDateTime inputDate,
-        LocalDateTime exitDate,
         Long userId,
         List<Long> ticketIds
 ) {
@@ -25,9 +22,7 @@ public record VehicleDTO(
                 entity.getPlate(),
                 entity.getModel(),
                 entity.getColor(),
-                entity.getInputDate(),
-                entity.getExitDate(),
-                entity.getUser() != null ? entity.getUser().getId() : null,
+                entity.getUser().getId(),
                 entity.getTickets().stream().map(TicketEntity::getId).toList()
 
         );
@@ -39,9 +34,7 @@ public record VehicleDTO(
                 vehicle.getPlate().getValue(),
                 vehicle.getModel(),
                 vehicle.getColor(),
-                vehicle.getInputDate(),
-                vehicle.getExitDate(),
-                vehicle.getId(),
+                vehicle.getUser().getId(),
                 vehicle.getTickets().stream().map(Ticket::getId).toList()
         );
     }
@@ -52,8 +45,7 @@ public record VehicleDTO(
                 .plate(this.plate)
                 .model(this.model)
                 .color(this.color)
-                .inputDate(this.inputDate)
-                .exitDate(this.exitDate)
+                .user(this.userId != null ? UserEntity.builder().id(this.userId).build() : null)
                 .build();
     }
 }

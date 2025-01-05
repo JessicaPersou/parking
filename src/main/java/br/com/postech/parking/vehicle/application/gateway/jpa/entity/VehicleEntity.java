@@ -46,11 +46,6 @@ public class VehicleEntity {
     @Column(nullable = false)
     private String color;
 
-    @Column(nullable = false)
-    private LocalDateTime inputDate;
-
-    private LocalDateTime exitDate;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
