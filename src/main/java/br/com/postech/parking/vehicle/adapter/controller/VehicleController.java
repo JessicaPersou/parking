@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequestMapping("/vehicles")
 @RequiredArgsConstructor
@@ -57,22 +59,37 @@ public class VehicleController {
         return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<VehicleDTO>> findVehicles() {
-//        List<Vehicle> vehicles = findVehicleUseCase.findAllVehicles();
-//        List<VehicleDTO> dtos = vehicles.stream()
-//                .map(vehicleFactory::createVehicleDTO)
-//                .collect(Collectors.toUnmodifiableList());
-//        return ResponseEntity.status(HttpStatus.OK).body(dtos);
-//    }
-//
-//    @PutMapping("/{plate}")
-//    public ResponseEntity<VehicleDTO> updateVehicle(@PathVariable String plate,
-//            @Valid @RequestBody VehicleDTO vehicleDTO) {
-//        Vehicle updateVehicle = updateVehicleUseCase.updateVehicle(plate, vehicleFactory.createVehicle(vehicleDTO));
-//        VehicleDTO responseDTO = vehicleFactory.createVehicleDTO(updateVehicle);
-//        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
-//    }
+    @GetMapping
+    public ResponseEntity<List<VehicleDTO>> findAllVehicles() {
+        List<Vehicle> vehicles = findVehicleUseCase.findAllVehicles();
+
+        List<VehicleDTO> dtos = vehicles.stream()
+                .map(vehicle -> {
+                    if (vehicle.getUser() == null) {
+                        log.warn("Vehicle {} has no associated user", vehicle.getId());
+                    }
+
+                    return new VehicleDTO(
+                            vehicle.getId(),
+                            vehicle.getPlate().getValue(),
+                            vehicle.getModel(),
+                            vehicle.getColor(),
+                            vehicle.getUser().getId(),
+                            vehicle.getTickets().stream().map(Ticket::getId).toList()
+                    );
+                })
+                .collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(dtos);
+    }
+
+    @PutMapping("/{plate}")
+    public ResponseEntity<VehicleDTO> updateVehicle(@PathVariable String plate,
+            @Valid @RequestBody VehicleDTO vehicleDTO) {
+        Vehicle updateVehicle = updateVehicleUseCase.updateVehicle(plate, vehicleFactory.createVehicle(vehicleDTO));
+        VehicleDTO responseDTO = vehicleFactory.createVehicleDTO(updateVehicle);
+        return ResponseEntity.status(HttpStatus.OK).body(responseDTO);
+    }
 
     @DeleteMapping("/{plate}")
     public ResponseEntity<Void> deleteVehicle(@PathVariable String plate) {
