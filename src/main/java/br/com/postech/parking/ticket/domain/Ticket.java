@@ -10,31 +10,31 @@ import lombok.Getter;
 public class Ticket {
 
     private Long id;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private LocalDateTime entryTime;
+    private LocalDateTime exitTime;
     private TicketStatusEnum status;
-    private BigDecimal price;
+    private BigDecimal totalAmount;
     private Vehicle vehicle;
     private User user;
 
-    public Ticket(Long id, LocalDateTime startTime, LocalDateTime endTime, TicketStatusEnum status, BigDecimal price) {
+    public Ticket(Long id, LocalDateTime entryTime, LocalDateTime exitTime, TicketStatusEnum status, BigDecimal totalAmount) {
         this.id = id;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.entryTime = entryTime;
+        this.exitTime = exitTime;
         this.status = status;
-        this.price = price;
+        this.totalAmount = totalAmount;
     }
 
     public boolean isExpired() {
-        return endTime.isBefore(LocalDateTime.now());
+        return exitTime.isBefore(LocalDateTime.now());
     }
 
     public boolean isValid(){
-        return endTime.isAfter(LocalDateTime.now());
+        return exitTime.isAfter(LocalDateTime.now());
     }
 
     public boolean priceIsValid(BigDecimal price) {
-        return this.price.compareTo(price) >= 0 ;
+        return this.totalAmount.compareTo(price) >= 0 ;
     }
 
     public Vehicle getVehicle() {

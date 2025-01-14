@@ -1,9 +1,7 @@
 package br.com.postech.parking.vehicle.application.gateway.jpa.entity;
 
 import br.com.postech.parking.ticket.application.gateway.jpa.entity.TicketEntity;
-import br.com.postech.parking.ticket.domain.factory.TicketFactory;
 import br.com.postech.parking.user.application.gateway.jpa.entity.UserEntity;
-import br.com.postech.parking.user.domain.User;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,7 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -47,8 +45,8 @@ public class VehicleEntity {
     private String color;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity user;
+    @JoinColumn(name = "owner_id", nullable = false)
+    private UserEntity owner;
 
     @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL)
     private List<TicketEntity> tickets = new ArrayList<>();

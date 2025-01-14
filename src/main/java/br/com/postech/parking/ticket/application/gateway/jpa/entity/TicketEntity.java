@@ -32,23 +32,23 @@ public class TicketEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "start_time")
-    private LocalDateTime startTime;
+    @Column(name = "entry_time")
+    private LocalDateTime entryTime;
 
-    @Column(name = "end_time")
-    private LocalDateTime endTime;
+    @Column(name = "exit_time")
+    private LocalDateTime exitTime;
 
     @Column(name = "status")
     private TicketStatusEnum status;
 
-    @Column(name = "price")
-    private BigDecimal price;
+    @Column(name = "total_amount")
+    private BigDecimal totalAmount;
 
     @ManyToOne
     @JoinColumn(name = "vehicle_id", nullable = false)
     private VehicleEntity vehicle;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity user;
+    @JoinColumn(name = "owner_id", nullable = false)
+    private UserEntity owner;
 }

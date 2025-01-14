@@ -4,8 +4,6 @@ import br.com.postech.parking.exception.EntityNotFoundException;
 import br.com.postech.parking.user.application.gateway.jpa.entity.UserEntity;
 import br.com.postech.parking.user.application.gateway.jpa.repository.UserRepository;
 import br.com.postech.parking.user.domain.User;
-import br.com.postech.parking.user.domain.valueobject.UserDocument;
-import br.com.postech.parking.user.domain.valueobject.UserEmail;
 import br.com.postech.parking.vehicle.application.dto.VehicleDTO;
 import br.com.postech.parking.vehicle.application.gateway.VehicleGateway;
 import br.com.postech.parking.vehicle.application.gateway.jpa.entity.VehicleEntity;
@@ -50,7 +48,7 @@ public class VehicleJpaGateway implements VehicleGateway {
         UserEntity userEntity = userRepository.findById(owner.getId())
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + owner.getId()));
 
-        entityToSave.setUser(userEntity);
+        entityToSave.setOwner(userEntity);
 
         log.info("Entity to save vehicle: {}", entityToSave);
         return convertToVehicleEntity(vehicleRepository.save(entityToSave));

@@ -22,7 +22,7 @@ public record VehicleDTO(
                 entity.getPlate(),
                 entity.getModel(),
                 entity.getColor(),
-                entity.getUser().getId(),
+                entity.getOwner().getId(),
                 entity.getTickets().stream().map(TicketEntity::getId).toList()
 
         );
@@ -45,7 +45,7 @@ public record VehicleDTO(
                 .plate(this.plate)
                 .model(this.model)
                 .color(this.color)
-                .user(this.userId != null ? UserEntity.builder().id(this.userId).build() : null)
+                .owner(this.userId != null ? UserEntity.builder().id(this.userId).build() : null)
                 .build();
     }
 }

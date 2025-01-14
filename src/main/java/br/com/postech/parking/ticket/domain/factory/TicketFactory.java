@@ -12,20 +12,20 @@ public class TicketFactory {
     public Ticket createTicketDTO(TicketDTO dto) {
         return new Ticket(
                 dto.id(),
-                dto.startTime(),
-                dto.endTime(),
+                dto.entryTime(),
+                dto.exitTime(),
                 dto.status(),
-                dto.price()
+                dto.totalAmount()
         );
     }
 
     public TicketDTO createTicketDTO(Ticket ticket) {
         return new TicketDTO(
                 ticket.getId(),
-                ticket.getStartTime(),
-                ticket.getEndTime(),
+                ticket.getEntryTime(),
+                ticket.getExitTime(),
                 ticket.getStatus(),
-                ticket.getPrice(),
+                ticket.getTotalAmount(),
                 ticket.getVehicle() != null ? ticket.getVehicle().getId() : null,
                 ticket.getUser() != null ? ticket.getUser().getId() : null        );
     }
@@ -33,10 +33,10 @@ public class TicketFactory {
     public Ticket createTicketFromEntities(TicketDTO dto, Vehicle vehicle, User user) {
         Ticket ticket = new Ticket(
                 dto.id(),
-                dto.startTime(),
-                dto.endTime(),
+                dto.entryTime(),
+                dto.exitTime(),
                 dto.status(),
-                dto.price()
+                dto.totalAmount()
         );
         ticket.setVehicle(vehicle);
         ticket.setUser(user);

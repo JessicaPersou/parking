@@ -2,27 +2,26 @@ package br.com.postech.parking.ticket.application.dto;
 
 import br.com.postech.parking.ticket.domain.TicketStatusEnum;
 import br.com.postech.parking.ticket.application.gateway.jpa.entity.TicketEntity;
-import br.com.postech.parking.user.application.gateway.jpa.entity.UserEntity;
-import br.com.postech.parking.vehicle.application.gateway.jpa.entity.VehicleEntity;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public record TicketDTO (
         Long id,
-        LocalDateTime startTime,
-        LocalDateTime endTime,
+        LocalDateTime entryTime,
+        LocalDateTime exitTime,
         TicketStatusEnum status,
-        BigDecimal price,
+        BigDecimal totalAmount,
         Long vehicleId,
         Long userId
 ){
 
     public TicketEntity toTicketEntity(){
         return TicketEntity.builder()
-                .startTime(this.startTime)
-                .endTime(this.endTime)
+                .entryTime(this.entryTime)
+                .exitTime(this.exitTime)
                 .status(this.status)
-                .price(this.price)
+                .totalAmount(this.totalAmount)
                 .build();
     }
 
@@ -30,12 +29,12 @@ public record TicketDTO (
     public static TicketDTO fromTicketEntity(TicketEntity entity) {
         return new TicketDTO(
                 entity.getId(),
-                entity.getStartTime(),
-                entity.getEndTime(),
+                entity.getEntryTime(),
+                entity.getExitTime(),
                 entity.getStatus(),
-                entity.getPrice(),
+                entity.getTotalAmount(),
                 entity.getVehicle() != null ? entity.getVehicle().getId() : null,
-                entity.getUser() != null ? entity.getUser().getId() : null
+                entity.getOwner() != null ? entity.getOwner().getId() : null
         );
     }
 }

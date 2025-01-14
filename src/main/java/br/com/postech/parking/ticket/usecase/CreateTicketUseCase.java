@@ -23,7 +23,7 @@ public class CreateTicketUseCase {
             throw new InvalidOperationException("Ticket is expired");
         }
 
-        if(!ticket.priceIsValid(ticket.getPrice())){
+        if(!ticket.priceIsValid(ticket.getTotalAmount())){
             log.info("Ticket price is invalid");
             throw new CalculationErrorException("Ticket price is invalid");
         }

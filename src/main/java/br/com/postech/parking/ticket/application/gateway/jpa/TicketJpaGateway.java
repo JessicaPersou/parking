@@ -50,11 +50,11 @@ public class TicketJpaGateway  implements TicketGateway {
         TicketEntity entityExist = ticketRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Ticket not found with id: " + id));
         entityExist.setStatus(ticket.getStatus());
-        entityExist.setPrice(ticket.getPrice());
-        entityExist.setStartTime(ticket.getStartTime());
+        entityExist.setTotalAmount(ticket.getTotalAmount());
+        entityExist.setEntryTime(ticket.getEntryTime());
 
         //TODO: Calcular tempo e adicionar o tempo para finalizar o tempo no estacionamento
-        entityExist.setEndTime(ticket.getEndTime());
+        entityExist.setExitTime(ticket.getExitTime());
         ticketRepository.save(entityExist);
         log.info("Ticket updated with id: " + id);
 
@@ -72,9 +72,9 @@ public class TicketJpaGateway  implements TicketGateway {
     public Ticket convertToUserEntity(TicketEntity entity) {
         return new Ticket(
                 entity.getId(),
-                entity.getStartTime(),
-                entity.getEndTime(),
+                entity.getEntryTime(),
+                entity.getExitTime(),
                 entity.getStatus(),
-                entity.getPrice());
+                entity.getTotalAmount());
     }
 }
