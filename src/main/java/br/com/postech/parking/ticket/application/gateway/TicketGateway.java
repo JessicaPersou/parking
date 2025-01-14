@@ -10,12 +10,4 @@ public interface TicketGateway {
 
     public Ticket generateTicket(Ticket ticket);
 
-    public Optional<Ticket> getTicket(Long id);
-
-    public List<Ticket> allTickets();
-
-    public Ticket updateTicket(Long id, Ticket ticket);
-
-    public void deleteTicket(Long id);
-
 }

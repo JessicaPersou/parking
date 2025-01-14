@@ -30,16 +30,4 @@ public class TicketFactory {
                 ticket.getUser() != null ? ticket.getUser().getId() : null        );
     }
 
-    public Ticket createTicketFromEntities(TicketDTO dto, Vehicle vehicle, User user) {
-        Ticket ticket = new Ticket(
-                dto.id(),
-                dto.entryTime(),
-                dto.exitTime(),
-                dto.status(),
-                dto.totalAmount()
-        );
-        ticket.setVehicle(vehicle);
-        ticket.setUser(user);
-        return ticket;
-    }
 }

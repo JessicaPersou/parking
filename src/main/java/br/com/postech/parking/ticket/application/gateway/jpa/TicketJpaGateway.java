@@ -31,44 +31,6 @@ public class TicketJpaGateway  implements TicketGateway {
         return convertToUserEntity(entity);
     }
 
-    @Override
-    public Optional<Ticket> getTicket(Long id) {
-        return ticketRepository.findById(id).map(this::convertToUserEntity);
-    }
-
-    @Override
-    public List<Ticket> allTickets() {
-        List<Ticket> ticketsList = ticketRepository.findAll()
-                .stream()
-                .map(this::convertToUserEntity)
-                .collect(Collectors.toUnmodifiableList());
-        return ticketsList;
-    }
-
-    @Override
-    public Ticket updateTicket(Long id, Ticket ticket) {
-        TicketEntity entityExist = ticketRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Ticket not found with id: " + id));
-        entityExist.setStatus(ticket.getStatus());
-        entityExist.setTotalAmount(ticket.getTotalAmount());
-        entityExist.setEntryTime(ticket.getEntryTime());
-
-        //TODO: Calcular tempo e adicionar o tempo para finalizar o tempo no estacionamento
-        entityExist.setExitTime(ticket.getExitTime());
-        ticketRepository.save(entityExist);
-        log.info("Ticket updated with id: " + id);
-
-        return convertToUserEntity(entityExist);
-    }
-
-    @Override
-    public void deleteTicket(Long id) {
-        TicketEntity entityExist = ticketRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Ticket not found with id: " + id));
-        log.info("Deleting user with id: {}", id);
-        ticketRepository.delete(entityExist);
-    }
-
     public Ticket convertToUserEntity(TicketEntity entity) {
         return new Ticket(
                 entity.getId(),

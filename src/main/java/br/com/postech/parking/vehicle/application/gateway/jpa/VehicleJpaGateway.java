@@ -34,11 +34,6 @@ public class VehicleJpaGateway implements VehicleGateway {
     }
 
     @Override
-    public Optional<Vehicle> findVehicleById(Long id) {
-        return vehicleRepository.findById(id).map(this::convertToVehicleEntity);
-    }
-
-    @Override
     public Vehicle createVehicle(Vehicle vehicle, User owner) {
         log.info("Creating vehicle: {}", vehicle);
 
@@ -52,40 +47,6 @@ public class VehicleJpaGateway implements VehicleGateway {
 
         log.info("Entity to save vehicle: {}", entityToSave);
         return convertToVehicleEntity(vehicleRepository.save(entityToSave));
-    }
-
-    @Override
-    public List<Vehicle> getAllVehicles() {
-        List<Vehicle> vehiclesList = vehicleRepository.findAll()
-                .stream()
-                .map(this::convertToVehicleEntity)
-                .collect(Collectors.toList());
-
-        log.info("Quantity of vehicles: {}", vehicleRepository.count());
-
-        return vehiclesList;
-    }
-
-    @Override
-    public Vehicle updateVehicle(String plate, Vehicle vehicle) {
-
-        VehicleEntity vehicleExits = vehicleRepository.findByPlate(plate)
-                .orElseThrow(() -> new EntityNotFoundException("Vehicle not found with plate: " + plate));
-
-        vehicleExits.setId(vehicle.getId());
-        vehicleExits.setColor(vehicle.getColor());
-
-        vehicleRepository.save(vehicleExits);
-        log.info("Update vehicle: {}", vehicleExits);
-        return convertToVehicleEntity(vehicleExits);
-    }
-
-    @Override
-    public void deleteVehicle(String plate) {
-        VehicleEntity vehicleExits = vehicleRepository.findByPlate(plate)
-                .orElseThrow(() -> new EntityNotFoundException("Vehicle not found with plate: " + plate));
-        log.info("Delete vehicle: {}", vehicleExits);
-        vehicleRepository.delete(vehicleExits);
     }
 
     private Vehicle convertToVehicleEntity(VehicleEntity entity) {

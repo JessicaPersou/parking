@@ -25,16 +25,4 @@ public record TicketDTO (
                 .build();
     }
 
-
-    public static TicketDTO fromTicketEntity(TicketEntity entity) {
-        return new TicketDTO(
-                entity.getId(),
-                entity.getEntryTime(),
-                entity.getExitTime(),
-                entity.getStatus(),
-                entity.getTotalAmount(),
-                entity.getVehicle() != null ? entity.getVehicle().getId() : null,
-                entity.getOwner() != null ? entity.getOwner().getId() : null
-        );
-    }
 }

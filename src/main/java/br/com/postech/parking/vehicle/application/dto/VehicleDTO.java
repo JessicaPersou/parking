@@ -16,29 +16,6 @@ public record VehicleDTO(
         List<Long> ticketIds
 ) {
 
-    public static VehicleDTO fromVehicleEntity(VehicleEntity entity) {
-        return new VehicleDTO(
-                entity.getId(),
-                entity.getPlate(),
-                entity.getModel(),
-                entity.getColor(),
-                entity.getOwner().getId(),
-                entity.getTickets().stream().map(TicketEntity::getId).toList()
-
-        );
-    }
-
-    public static VehicleDTO fromVehicleDomain(Vehicle vehicle) {
-        return new VehicleDTO(
-                vehicle.getId(),
-                vehicle.getPlate().getValue(),
-                vehicle.getModel(),
-                vehicle.getColor(),
-                vehicle.getUser().getId(),
-                vehicle.getTickets().stream().map(Ticket::getId).toList()
-        );
-    }
-
     public VehicleEntity toVehicleEntity() {
         return VehicleEntity.builder()
                 .id(this.id)
