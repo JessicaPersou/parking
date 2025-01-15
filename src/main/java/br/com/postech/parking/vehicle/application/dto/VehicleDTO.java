@@ -1,10 +1,8 @@
 package br.com.postech.parking.vehicle.application.dto;
 
-import br.com.postech.parking.ticket.application.gateway.jpa.entity.TicketEntity;
-import br.com.postech.parking.ticket.domain.Ticket;
-import br.com.postech.parking.user.application.gateway.jpa.entity.UserEntity;
+import br.com.postech.parking.owner.application.gateway.jpa.entity.OwnerEntity;
 import br.com.postech.parking.vehicle.application.gateway.jpa.entity.VehicleEntity;
-import br.com.postech.parking.vehicle.domain.Vehicle;
+
 import java.util.List;
 
 public record VehicleDTO(
@@ -12,7 +10,7 @@ public record VehicleDTO(
         String plate,
         String model,
         String color,
-        Long userId,
+        Long ownerId,
         List<Long> ticketIds
 ) {
 
@@ -22,7 +20,7 @@ public record VehicleDTO(
                 .plate(this.plate)
                 .model(this.model)
                 .color(this.color)
-                .owner(this.userId != null ? UserEntity.builder().id(this.userId).build() : null)
+                .owner(this.ownerId != null ? OwnerEntity.builder().id(this.ownerId).build() : null)
                 .build();
     }
 }

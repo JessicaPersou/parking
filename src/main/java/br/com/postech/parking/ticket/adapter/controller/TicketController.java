@@ -1,6 +1,7 @@
 package br.com.postech.parking.ticket.adapter.controller;
 
 import br.com.postech.parking.ticket.application.dto.TicketDTO;
+import br.com.postech.parking.ticket.application.dto.TicketRequestDTO;
 import br.com.postech.parking.ticket.domain.Ticket;
 import br.com.postech.parking.ticket.domain.factory.TicketFactory;
 import br.com.postech.parking.ticket.usecase.CreateTicketUseCase;
@@ -19,15 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class TicketController {
 
     public final TicketFactory ticketFactory;
-
     private final CreateTicketUseCase createTicketUseCase;
 
     @PostMapping
-    public ResponseEntity<TicketDTO> createNewUser(@Valid @RequestBody TicketDTO ticketDTO) {
-        Ticket ticket = ticketFactory.createTicketDTO(ticketDTO);
-        Ticket createTicket = createTicketUseCase.createTicketUseCase(ticket);
-        TicketDTO responseDTO = ticketFactory.createTicketDTO(createTicket);
-
+    public ResponseEntity<TicketDTO> generateTicket(@Valid @RequestBody TicketRequestDTO requestDTO) {
+        Ticket ticket = createTicketUseCase.execute(requestDTO);
+        TicketDTO responseDTO = ticketFactory.createTicketDTO(ticket);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
 

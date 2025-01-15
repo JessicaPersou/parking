@@ -27,13 +27,13 @@ public class VehicleController {
     @PostMapping
     public ResponseEntity<VehicleDTO> createVehicle(@Valid @RequestBody VehicleDTO vehicleDTO) {
         Vehicle vehicle = vehicleFactory.createVehicle(vehicleDTO);
-        Vehicle createdVehicle = createVehicleUseCase.createVehicle(vehicle, vehicleDTO.userId());
+        Vehicle createdVehicle = createVehicleUseCase.createVehicle(vehicle, vehicleDTO.ownerId());
         VehicleDTO responseDTO = new VehicleDTO(
                 createdVehicle.getId(),
                 createdVehicle.getPlate().getValue(),
                 createdVehicle.getModel(),
                 createdVehicle.getColor(),
-                vehicleDTO.userId(),
+                vehicleDTO.ownerId(),
                 createdVehicle.getTickets().stream().map(Ticket::getId).toList()
         );
 

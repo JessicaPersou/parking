@@ -24,7 +24,7 @@ public class VehicleFactory {
                 vehicle.getPlate().getValue(),
                 vehicle.getModel(),
                 vehicle.getColor(),
-                vehicle.getUser().getId(),
+                vehicle.getOwner().getId(),
                 vehicle.getTickets().stream().map(Ticket::getId).toList()
         );
     }

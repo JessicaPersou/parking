@@ -1,9 +1,10 @@
 package br.com.postech.parking.vehicle.domain;
 
+import br.com.postech.parking.owner.domain.Owner;
 import br.com.postech.parking.ticket.domain.Ticket;
-import br.com.postech.parking.user.domain.User;
 import br.com.postech.parking.vehicle.domain.valueobject.VehiclePlate;
 import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,7 +16,7 @@ public class Vehicle {
     private VehiclePlate plate;
     private String model;
     private String color;
-    private User user;
+    private Owner owner;
     private List<Ticket> tickets = new ArrayList<>();
 
     public Vehicle(Long id, VehiclePlate plate, String model, String color) {
@@ -29,8 +30,8 @@ public class Vehicle {
         return Collections.unmodifiableList(tickets);
     }
 
-    public void setUserId(User user) {
-        this.user = user;
+    public void setOwnerId(Owner owner) {
+        this.owner = owner;
     }
 
 }

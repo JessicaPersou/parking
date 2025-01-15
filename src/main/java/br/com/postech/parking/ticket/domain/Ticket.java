@@ -1,10 +1,11 @@
 package br.com.postech.parking.ticket.domain;
 
-import br.com.postech.parking.user.domain.User;
+import br.com.postech.parking.owner.domain.Owner;
 import br.com.postech.parking.vehicle.domain.Vehicle;
+import lombok.Getter;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import lombok.Getter;
 
 @Getter
 public class Ticket {
@@ -15,7 +16,7 @@ public class Ticket {
     private TicketStatusEnum status;
     private BigDecimal totalAmount;
     private Vehicle vehicle;
-    private User user;
+    private Owner owner;
 
     public Ticket(Long id, LocalDateTime entryTime, LocalDateTime exitTime, TicketStatusEnum status, BigDecimal totalAmount) {
         this.id = id;
@@ -29,12 +30,12 @@ public class Ticket {
         return exitTime.isBefore(LocalDateTime.now());
     }
 
-    public boolean isValid(){
+    public boolean isValid() {
         return exitTime.isAfter(LocalDateTime.now());
     }
 
     public boolean priceIsValid(BigDecimal price) {
-        return this.totalAmount.compareTo(price) >= 0 ;
+        return this.totalAmount.compareTo(price) >= 0;
     }
 
     public Vehicle getVehicle() {
@@ -45,11 +46,11 @@ public class Ticket {
         this.vehicle = vehicle;
     }
 
-    public User getUser() {
-        return user;
+    public Owner getOwner() {
+        return owner;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
 }

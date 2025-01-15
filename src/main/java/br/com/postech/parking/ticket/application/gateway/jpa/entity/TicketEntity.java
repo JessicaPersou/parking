@@ -1,23 +1,13 @@
 package br.com.postech.parking.ticket.application.gateway.jpa.entity;
 
+import br.com.postech.parking.owner.application.gateway.jpa.entity.OwnerEntity;
 import br.com.postech.parking.ticket.domain.TicketStatusEnum;
-import br.com.postech.parking.user.application.gateway.jpa.entity.UserEntity;
 import br.com.postech.parking.vehicle.application.gateway.jpa.entity.VehicleEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "ticket")
@@ -50,5 +40,5 @@ public class TicketEntity {
 
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
-    private UserEntity owner;
+    private OwnerEntity owner;
 }

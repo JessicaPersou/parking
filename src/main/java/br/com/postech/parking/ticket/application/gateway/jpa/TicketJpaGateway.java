@@ -6,10 +6,6 @@ import br.com.postech.parking.ticket.application.gateway.jpa.entity.TicketEntity
 import br.com.postech.parking.ticket.application.gateway.jpa.repository.TicketRepository;
 import br.com.postech.parking.ticket.domain.Ticket;
 import br.com.postech.parking.ticket.domain.factory.TicketFactory;
-import jakarta.persistence.EntityNotFoundException;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -17,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class TicketJpaGateway  implements TicketGateway {
+public class TicketJpaGateway implements TicketGateway {
 
     private final TicketRepository ticketRepository;
     private final TicketFactory ticketFactory;

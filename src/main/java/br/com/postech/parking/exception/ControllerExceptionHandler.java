@@ -1,18 +1,19 @@
 package br.com.postech.parking.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
-import java.time.Instant;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.time.Instant;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<StandardError> entityNotFoundException(EntityNotFoundException ex,
-            HttpServletRequest request) {
+                                                                 HttpServletRequest request) {
         StandardError error = new StandardError();
         HttpStatus status = HttpStatus.NOT_FOUND;
         error.setStatus(status.value());
@@ -25,7 +26,7 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(EntityAlreadyExistsException.class)
     public ResponseEntity<StandardError> entityAlreadyExistsException(EntityAlreadyExistsException ex,
-            HttpServletRequest request) {
+                                                                      HttpServletRequest request) {
         StandardError error = new StandardError();
         HttpStatus status = HttpStatus.CONFLICT;
         error.setStatus(status.value());

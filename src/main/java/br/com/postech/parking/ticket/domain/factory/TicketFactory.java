@@ -2,8 +2,6 @@ package br.com.postech.parking.ticket.domain.factory;
 
 import br.com.postech.parking.ticket.application.dto.TicketDTO;
 import br.com.postech.parking.ticket.domain.Ticket;
-import br.com.postech.parking.user.domain.User;
-import br.com.postech.parking.vehicle.domain.Vehicle;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -27,7 +25,7 @@ public class TicketFactory {
                 ticket.getStatus(),
                 ticket.getTotalAmount(),
                 ticket.getVehicle() != null ? ticket.getVehicle().getId() : null,
-                ticket.getUser() != null ? ticket.getUser().getId() : null        );
+                ticket.getOwner() != null ? ticket.getOwner().getId() : null);
     }
 
 }
