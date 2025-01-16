@@ -30,9 +30,17 @@ independente de frameworks ou tecnologias específicas.
 2. Navegue até a pasta do projeto:
    ```bash
    cd parking
+   
+#### * **Certifique-se de ter o Docker e o Docker Compose instalados**
+3. Subir os serviços com:
+   ```bash
+   docker-compose up -d
 
-3. Execute o projeto com o Maven:
+4. O banco de dados configurada no arquivo Compose.
+   ```bash
+   porta:5432
+   
+5. Execute o projeto com o Maven:
    ```bash
    ./mvnw spring-boot:run
 
-**TODO**: Explicação Docker Compose
