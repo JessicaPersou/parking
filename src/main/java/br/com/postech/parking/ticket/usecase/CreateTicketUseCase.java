@@ -33,8 +33,7 @@ public class CreateTicketUseCase {
 
         Vehicle vehicle = vehicleGateway.findById(requestDTO.vehicleId());
 
-        Owner owner = ownerGateway.findOwnerById(requestDTO.ownerId())
-                .orElseThrow(() -> new EntityNotFoundException("Owner not found"));
+        Owner owner = ownerGateway.findOwnerById(requestDTO.ownerId());
 
         Ticket ticket = new Ticket(
                 null,

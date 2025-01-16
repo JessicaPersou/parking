@@ -21,7 +21,7 @@ public class CreateVehicleUseCase {
     private final OwnerGateway ownerGateway;
 
     public Vehicle createVehicle(Vehicle vehicle, Long ownerId) {
-        Owner validOwner = ownerGateway.findOwnerById(ownerId).orElseThrow(() -> new EntityNotFoundException("Owner not found: " + ownerId));
+        Owner validOwner = ownerGateway.findOwnerById(ownerId);
 
         vehicle.setOwnerId(validOwner);
 

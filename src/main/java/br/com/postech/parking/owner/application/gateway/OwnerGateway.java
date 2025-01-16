@@ -9,7 +9,7 @@ public interface OwnerGateway {
 
     Owner createOwner(Owner owner);
 
-    Optional<Owner> findOwnerById(Long id);
+    Owner findOwnerById(Long id);
 
     List<Owner> getAllOwners();
 

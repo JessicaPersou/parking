@@ -35,8 +35,10 @@ public class OwnerJpaGateway implements OwnerGateway {
     }
 
     @Override
-    public Optional<Owner> findOwnerById(Long id) {
-        return ownerRepository.findById(id).map(this::convertToOwnerEntity);
+    public Owner findOwnerById(Long id) {
+        OwnerEntity ownerEntity = ownerRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+        return convertToOwnerEntity(ownerEntity);
     }
 
     @Override
