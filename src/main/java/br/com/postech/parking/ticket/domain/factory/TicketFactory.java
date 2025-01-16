@@ -2,7 +2,6 @@ package br.com.postech.parking.ticket.domain.factory;
 
 import br.com.postech.parking.owner.domain.Owner;
 import br.com.postech.parking.ticket.application.dto.TicketResponseDTO;
-import br.com.postech.parking.ticket.application.gateway.jpa.entity.TicketEntity;
 import br.com.postech.parking.ticket.domain.Ticket;
 import br.com.postech.parking.ticket.domain.TicketStatusEnum;
 import br.com.postech.parking.vehicle.domain.Vehicle;
@@ -20,13 +19,13 @@ public class TicketFactory {
         }
 
         return new Ticket(
-                null, // id será gerado pelo banco
-                LocalDateTime.now(), // entryTime
-                LocalDateTime.now().plusHours(2), // exitTime
-                TicketStatusEnum.ACTIVE, // status
-                BigDecimal.ZERO, // totalAmount inicial
-                vehicle, // vehicle não pode ser null
-                owner // owner não pode ser null
+                null,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusHours(2),
+                TicketStatusEnum.ACTIVE,
+                BigDecimal.ZERO,
+                vehicle,
+                owner
         );
     }
 

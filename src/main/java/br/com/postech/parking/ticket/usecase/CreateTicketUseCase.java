@@ -7,7 +7,6 @@ import br.com.postech.parking.owner.domain.Owner;
 import br.com.postech.parking.ticket.application.dto.TicketRequestDTO;
 import br.com.postech.parking.ticket.application.gateway.TicketGateway;
 import br.com.postech.parking.ticket.domain.Ticket;
-import br.com.postech.parking.ticket.domain.TicketStatusEnum;
 import br.com.postech.parking.ticket.domain.factory.TicketFactory;
 import br.com.postech.parking.vehicle.application.gateway.VehicleGateway;
 import br.com.postech.parking.vehicle.domain.Vehicle;

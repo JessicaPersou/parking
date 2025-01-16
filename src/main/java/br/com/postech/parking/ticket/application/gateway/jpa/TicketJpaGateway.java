@@ -45,7 +45,6 @@ public class TicketJpaGateway implements TicketGateway {
         entity.setOwner(ownerEntity);
 
         TicketEntity saved = ticketRepository.save(entity);
-
         return convertToUserEntity(saved);
     }
 
@@ -77,7 +76,6 @@ public class TicketJpaGateway implements TicketGateway {
         ticket.setOwner(owner);
 
         ticketFactory.createTicket(vehicle, owner);
-
         return ticket;
     }
 }
