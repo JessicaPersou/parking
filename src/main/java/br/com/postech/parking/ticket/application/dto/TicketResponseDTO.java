@@ -6,7 +6,7 @@ import br.com.postech.parking.ticket.domain.TicketStatusEnum;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public record TicketDTO(
+public record TicketResponseDTO(
         Long id,
         LocalDateTime entryTime,
         LocalDateTime exitTime,

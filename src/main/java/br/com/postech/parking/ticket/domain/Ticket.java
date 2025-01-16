@@ -18,12 +18,17 @@ public class Ticket {
     private Vehicle vehicle;
     private Owner owner;
 
-    public Ticket(Long id, LocalDateTime entryTime, LocalDateTime exitTime, TicketStatusEnum status, BigDecimal totalAmount) {
+    public Ticket() {}
+
+    public Ticket(Long id, LocalDateTime entryTime, LocalDateTime exitTime, TicketStatusEnum status,
+                  BigDecimal totalAmount, Vehicle vehicle, Owner owner) {
         this.id = id;
         this.entryTime = entryTime;
         this.exitTime = exitTime;
         this.status = status;
         this.totalAmount = totalAmount;
+        this.vehicle = vehicle;
+        this.owner = owner;
     }
 
     public boolean isExpired() {

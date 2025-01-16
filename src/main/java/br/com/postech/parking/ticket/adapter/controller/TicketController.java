@@ -1,6 +1,6 @@
 package br.com.postech.parking.ticket.adapter.controller;
 
-import br.com.postech.parking.ticket.application.dto.TicketDTO;
+import br.com.postech.parking.ticket.application.dto.TicketResponseDTO;
 import br.com.postech.parking.ticket.application.dto.TicketRequestDTO;
 import br.com.postech.parking.ticket.domain.Ticket;
 import br.com.postech.parking.ticket.domain.factory.TicketFactory;
@@ -23,9 +23,9 @@ public class TicketController {
     private final CreateTicketUseCase createTicketUseCase;
 
     @PostMapping
-    public ResponseEntity<TicketDTO> generateTicket(@Valid @RequestBody TicketRequestDTO requestDTO) {
+    public ResponseEntity<TicketResponseDTO> generateTicket(@Valid @RequestBody TicketRequestDTO requestDTO) {
         Ticket ticket = createTicketUseCase.execute(requestDTO);
-        TicketDTO responseDTO = ticketFactory.createTicketDTO(ticket);
+        TicketResponseDTO responseDTO = ticketFactory.createTicketDTO(ticket);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
 
