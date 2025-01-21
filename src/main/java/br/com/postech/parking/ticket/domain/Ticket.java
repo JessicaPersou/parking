@@ -13,18 +13,21 @@ public class Ticket {
     private Long id;
     private LocalDateTime entryTime;
     private LocalDateTime exitTime;
+    private Integer duration;
     private TicketStatusEnum status;
     private BigDecimal totalAmount;
     private Vehicle vehicle;
     private Owner owner;
 
-    public Ticket() {}
+    public Ticket() {
+    }
 
-    public Ticket(Long id, LocalDateTime entryTime, LocalDateTime exitTime, TicketStatusEnum status,
+    public Ticket(Long id, LocalDateTime entryTime, LocalDateTime exitTime, Integer duration, TicketStatusEnum status,
                   BigDecimal totalAmount, Vehicle vehicle, Owner owner) {
         this.id = id;
         this.entryTime = entryTime;
         this.exitTime = exitTime;
+        this.duration = duration;
         this.status = status;
         this.totalAmount = totalAmount;
         this.vehicle = vehicle;
@@ -33,10 +36,6 @@ public class Ticket {
 
     public boolean isExpired() {
         return exitTime.isBefore(LocalDateTime.now());
-    }
-
-    public boolean isValid() {
-        return exitTime.isAfter(LocalDateTime.now());
     }
 
     public boolean priceIsValid(BigDecimal price) {

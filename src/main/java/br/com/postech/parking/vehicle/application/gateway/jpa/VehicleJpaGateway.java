@@ -40,7 +40,7 @@ public class VehicleJpaGateway implements VehicleGateway {
         VehicleEntity entityToSave = dto.toVehicleEntity();
 
         OwnerEntity ownerEntity = ownerRepository.findById(owner.getId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + owner.getId()));
+                .orElseThrow(() -> new EntityNotFoundException("Owner not found with id: " + owner.getId()));
 
         entityToSave.setOwner(ownerEntity);
 
@@ -50,7 +50,7 @@ public class VehicleJpaGateway implements VehicleGateway {
 
     public Vehicle findById(Long id) {
         VehicleEntity existVehicle = vehicleRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Vehicle not found with id: " + id));
         return convertToVehicleEntity(existVehicle);
     }
 

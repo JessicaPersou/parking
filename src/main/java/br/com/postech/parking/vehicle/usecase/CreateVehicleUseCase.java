@@ -1,7 +1,6 @@
 package br.com.postech.parking.vehicle.usecase;
 
 import br.com.postech.parking.exception.EntityAlreadyExistsException;
-import br.com.postech.parking.exception.EntityNotFoundException;
 import br.com.postech.parking.owner.application.gateway.OwnerGateway;
 import br.com.postech.parking.owner.domain.Owner;
 import br.com.postech.parking.vehicle.application.gateway.VehicleGateway;

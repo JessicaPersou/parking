@@ -1,7 +1,7 @@
 package br.com.postech.parking.ticket.adapter.controller;
 
-import br.com.postech.parking.ticket.application.dto.TicketResponseDTO;
 import br.com.postech.parking.ticket.application.dto.TicketRequestDTO;
+import br.com.postech.parking.ticket.application.dto.TicketResponseDTO;
 import br.com.postech.parking.ticket.domain.Ticket;
 import br.com.postech.parking.ticket.domain.factory.TicketFactory;
 import br.com.postech.parking.ticket.usecase.CreateTicketUseCase;

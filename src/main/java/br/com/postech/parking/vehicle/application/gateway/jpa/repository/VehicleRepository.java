@@ -10,3 +10,4 @@ public interface VehicleRepository extends JpaRepository<VehicleEntity, Long> {
     Optional<VehicleEntity> findByPlate(String plate);
 
 }
+

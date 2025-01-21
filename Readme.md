@@ -2,8 +2,9 @@
 
 ### Descrição do Projeto
 
-O Projeto **Parking** é uma solução atualizada para um Sistema de Parquímetro, que estava precisando ser refatorado. 
-O sistema deve gerenciar, controlar e monitorar um estacionamento de maneira eficiente, com tecnologia e arquitetura mais modernas.
+O Projeto **Parking** é uma solução atualizada para um Sistema de Parquímetro, que estava precisando ser refatorado.
+O sistema deve gerenciar, controlar e monitorar um estacionamento de maneira eficiente, com tecnologia e arquitetura
+mais modernas.
 Este sistema usa os princípios de Clean Architecture, garantindo uma estrutura modular, facilmente testável e
 independente de frameworks ou tecnologias específicas.
 
@@ -19,7 +20,7 @@ independente de frameworks ou tecnologias específicas.
 
 - **Java 21**
 - **Spring Framework 3.0**
-- **Docker Compose**- (Em implementação) 
+- **Docker Compose**- (Em implementação)
 
 ### Como Executar
 
@@ -30,8 +31,9 @@ independente de frameworks ou tecnologias específicas.
 2. Navegue até a pasta do projeto:
    ```bash
    cd parking
-   
-#### * **Certifique-se de ter o Docker e o Docker Compose instalados**
+
+####  * **Certifique-se de ter o Docker e o Docker Compose instalados**
+
 3. Subir os serviços com:
    ```bash
    docker-compose up -d
@@ -39,7 +41,7 @@ independente de frameworks ou tecnologias específicas.
 4. O banco de dados configurada no arquivo Compose.
    ```bash
    porta:5432
-   
+
 5. Execute o projeto com o Maven:
    ```bash
    ./mvnw spring-boot:run

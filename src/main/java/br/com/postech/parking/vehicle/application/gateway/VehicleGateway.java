@@ -6,6 +6,7 @@ import br.com.postech.parking.vehicle.domain.Vehicle;
 
 import java.util.Optional;
 
+
 public interface VehicleGateway {
 
     Optional<Vehicle> getVehicleByPlate(String plate);

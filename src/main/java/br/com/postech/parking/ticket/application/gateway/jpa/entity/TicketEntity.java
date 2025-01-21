@@ -28,6 +28,8 @@ public class TicketEntity {
     @Column(name = "exit_time")
     private LocalDateTime exitTime;
 
+    private Integer duration;
+
     @Column(name = "status")
     private TicketStatusEnum status;
 

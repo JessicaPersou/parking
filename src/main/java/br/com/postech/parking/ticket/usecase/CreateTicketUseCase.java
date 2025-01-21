@@ -14,9 +14,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -34,10 +31,18 @@ public class CreateTicketUseCase {
             throw new InvalidOperationException("Ticket values are null");
         }
 
-        Ticket ticket = ticketFactory.createTicket(vehicle, owner);
+        Ticket ticket = ticketFactory.createTicket(vehicle, owner, requestDTO);
 
         log.info("Creating ticket: {}", ticket);
 
+        validateTicket(ticket);
+
+        Ticket ticketsave = ticketGateway.generateTicket(ticket);
+        log.info("Ticket created: {}", ticket);
+        return ticketsave;
+    }
+
+    private void validateTicket(Ticket ticket) {
         if (ticket.isExpired()) {
             log.info("Ticket is expired");
             throw new InvalidOperationException("Ticket is expired");
@@ -47,9 +52,5 @@ public class CreateTicketUseCase {
             log.info("Ticket price is invalid");
             throw new CalculationErrorException("Ticket price is invalid");
         }
-
-        ticketGateway.generateTicket(ticket);
-        log.info("Ticket created: {}", ticket);
-        return ticket;
     }
 }

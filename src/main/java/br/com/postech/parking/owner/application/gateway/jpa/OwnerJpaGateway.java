@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -38,6 +37,12 @@ public class OwnerJpaGateway implements OwnerGateway {
     public Owner findOwnerById(Long id) {
         OwnerEntity ownerEntity = ownerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+        return convertToOwnerEntity(ownerEntity);
+    }
+
+    @Override
+    public Owner findByDocument(String document) {
+        OwnerEntity ownerEntity = ownerRepository.findByOwnerDocument(document);
         return convertToOwnerEntity(ownerEntity);
     }
 

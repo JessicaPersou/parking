@@ -40,12 +40,13 @@ public class TicketJpaGateway implements TicketGateway {
         entity.setEntryTime(ticket.getEntryTime());
         entity.setExitTime(ticket.getExitTime());
         entity.setStatus(ticket.getStatus());
+        entity.setDuration(ticket.getDuration());
         entity.setTotalAmount(ticket.getTotalAmount());
         entity.setVehicle(vehicleEntity);
         entity.setOwner(ownerEntity);
 
-        TicketEntity saved = ticketRepository.save(entity);
-        return convertToUserEntity(saved);
+        log.info("Creating ticket in database: {}", entity);
+        return convertToUserEntity(ticketRepository.save(entity));
     }
 
     public Ticket convertToUserEntity(TicketEntity entity) {
@@ -53,16 +54,12 @@ public class TicketJpaGateway implements TicketGateway {
             throw new IllegalArgumentException("Entity cannot be null");
         }
 
-        Ticket ticket = new Ticket();
-
         Vehicle vehicle = new Vehicle(
                 entity.getVehicle().getId(),
                 VehiclePlate.createVehiclePlateFactory(entity.getVehicle().getPlate()),
                 entity.getVehicle().getModel(),
                 entity.getVehicle().getColor()
         );
-        ticket.setVehicle(vehicle);
-
 
         Owner owner = new Owner(
                 entity.getOwner().getId(),
@@ -73,9 +70,7 @@ public class TicketJpaGateway implements TicketGateway {
                 OwnerEmail.createEmailFactory(entity.getOwner().getOwnerEmail()),
                 entity.getOwner().getPhoneNumber()
         );
-        ticket.setOwner(owner);
 
-        ticketFactory.createTicket(vehicle, owner);
-        return ticket;
+        return ticketFactory.createTicketComplete(vehicle, owner, entity);
     }
 }
