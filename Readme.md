@@ -2,25 +2,63 @@
 
 ### Descrição do Projeto
 
-O Projeto **Parking** é uma solução atualizada para um Sistema de Parquímetro, que estava precisando ser refatorado.
-O sistema deve gerenciar, controlar e monitorar um estacionamento de maneira eficiente, com tecnologia e arquitetura
-mais modernas.
-Este sistema usa os princípios de Clean Architecture, garantindo uma estrutura modular, facilmente testável e
-independente de frameworks ou tecnologias específicas.
+O Projeto **Parking** é uma solução moderna para um sistema de parquímetro, desenvolvido para gerenciar, controlar e monitorar estacionamentos de maneira eficiente. Ele utiliza tecnologias avançadas e princípios de arquitetura para garantir escalabilidade e fácil manutenção.
+
+O sistema foi construído com base nos princípios de **Clean Architecture** e **Domain-Driven Design (DDD)**, garantindo uma estrutura modular, testável e independente de frameworks ou tecnologias específicas.
+
+---
+
+### Arquitetura do Projeto
+
+#### **Clean Architecture**
+A Clean Architecture organiza o sistema em camadas, separando responsabilidades de forma clara:
+- **Controller:** Recebe as requisições HTTP e transforma os dados para o formato necessário.
+- **Use Cases:** Contém as regras de negócio e coordena as interações com o domínio.
+- **Domain:** Representa o núcleo do sistema, contendo as entidades e objetos de valor que refletem o domínio do negócio.
+- **Gateways:** Adaptam o sistema para interagir com tecnologias externas, como bancos de dados ou APIs.
+
+#### **Domain-Driven Design (DDD)**
+O DDD é aplicado para alinhar o código com os conceitos do domínio:
+- **Entidades**: Modelos principais do sistema, como `Vehicle` e `Owner`.
+- **Value Objects**: Objeto imutável que representa um valor específico, como `OwnerDocument` e `VehiclePlate`.
+- **Casos de Uso**: Classes que encapsulam a lógica de aplicação, como `CreateVehicleUseCase` e `CreateTicketUseCase`.
+- **Gateways**: Interfaces que conectam o domínio com a infraestrutura, como o `VehicleJpaGateway`.
+
+---
 
 ### Fluxo de Comunicação
 
-1. Controller recebe a requisição e transforma os dados de entrada.
-2. Controller chama o Caso de Uso, passando os dados processados.
-3. O Caso de Uso interage com as Entidades e usa interfaces de repositórios para acessar dados.
-4. O resultado do Caso de Uso é enviado para um JpaGateway, que adapta o dado para a interface.
-5. Gateway devolve a resposta ao Controller, que retorna ao cliente.
+- O **Controller** recebe a requisição e transforma os dados de entrada.
+- O **Controller** chama o Caso de Uso, passando os dados processados.
+- O Caso de Uso interage com as **Entidades** e utiliza interfaces de repositórios para acessar ou manipular dados.
+- O Caso de Uso passa o resultado para o **Gateway**, que adapta os dados para o formato necessário.
+- O **Gateway** devolve a resposta ao **Controller**, que a retorna ao cliente.
+
+---
 
 ### Tecnologias Utilizadas
 
 - **Java 21**
 - **Spring Framework 3.0**
-- **Docker Compose**- (Em implementação)
+- **Docker Compose** 
+- **PostgreSQL** *(Banco de dados configurado no Docker Compose)
+
+---
+
+### Documentação e Testes
+
+A documentação das APIs foi desenvolvida no **Postman**.  
+Você pode utilizar a coleção do Postman para testar os endpoints e entender como o sistema funciona.
+
+[Link para a documentação no Postman](https://github.com/JessicaPersou/parking/blob/main/parking_documentation.postman_collection.json)
+
+---
+
+### Como Executar o Projeto
+
+#### Pré-requisitos
+- **Docker** e **Docker Compose** instalados.
+- **Maven** para build e execução do projeto.
 
 ### Como Executar
 
