@@ -1,0 +1,133 @@
+{
+	"info": {
+		"_postman_id": "b53f6ce9-6463-4d71-bc48-c6811d942a4a",
+		"name": "parking_documentation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "19199790"
+	},
+	"item": [
+		{
+			"name": "owner",
+			"item": [
+				{
+					"name": "create-owner",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Mariano\",\r\n    \"lastName\": \"Justino\",\r\n    \"birthdate\": \"1999-11-29\",\r\n    \"ownerDocument\": \"456.112.783-12\",\r\n    \"ownerEmail\": \"mjustino@gmail.com\",\r\n    \"phoneNumber\": \"1199999999\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/owners",
+						"description": "Generated from cURL: curl -X POST http://localhost:8080/vehicles \\\r\n     -H \"Content-Type: application/json\" \\\r\n     -d '{\r\n    \"plate\": \"ABC1234\",\r\n    \"model\": \"Toyota Corolla\",\r\n    \"color\": \"Prata\",\r\n    \"inputDate\": \"2024-02-15T10:30:00\"\r\n}'"
+					},
+					"response": []
+				},
+				{
+					"name": "update-owner",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Mariano\",\r\n    \"lastName\": \"Justino Silveira\",\r\n    \"ownerDocument\": \"45611278312\",\r\n    \"ownerEmail\": \"mjustino@gmail.com\",\r\n    \"phoneNumber\": \"1199999999\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/owners/1"
+					},
+					"response": []
+				},
+				{
+					"name": "find-all-owner",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/owners"
+					},
+					"response": []
+				},
+				{
+					"name": "find-owners-id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/owners/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "vehicle",
+			"item": [
+				{
+					"name": "create-vehicle",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"plate\": \"bko1b97\",\r\n    \"model\": \"Prisma LT\",\r\n    \"color\": \"Azul\",\r\n    \"ownerId\": 1\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/vehicles",
+						"description": "Generated from cURL: curl -X POST [http://localhost:8080/vehicles](http://localhost:8080/vehicles)  \n\\-H \"Content-Type: application/json\"  \n\\-d '{  \n\"plate\": \"ABC1234\",  \n\"model\": \"Toyota Corolla\",  \n\"color\": \"Prata\",  \n\"inputDate\": \"2024-02-15T10:30:00\"  \n}'"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "tickets",
+			"item": [
+				{
+					"name": "create-tickets",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"vehicleId\": 1,\r\n    \"ownerId\": 1,\r\n    \"duration\": 2\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/tickets",
+						"description": "Generated from cURL: curl -X POST http://localhost:8080/vehicles \\\r\n     -H \"Content-Type: application/json\" \\\r\n     -d '{\r\n    \"plate\": \"ABC1234\",\r\n    \"model\": \"Toyota Corolla\",\r\n    \"color\": \"Prata\",\r\n    \"inputDate\": \"2024-02-15T10:30:00\"\r\n}'"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
